@@ -24,6 +24,16 @@ export class InMemoryDeliverymanRepository implements DeliverymanRepository {
     return deliveryman
   }
 
+  async findAll(): Promise<Deliveryman[] | null> {
+    const deliverymen = this.items
+
+    if (!deliverymen) {
+      return null
+    }
+
+    return deliverymen
+  }
+
   async create(data: Deliveryman): Promise<void> {
     this.items.push(data)
   }
