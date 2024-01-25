@@ -43,6 +43,8 @@ export class CreateAdminUseCase {
       password: hashedPassword,
     })
 
+    await this.adminsRepository.create(admin)
+
     return right({
       admin,
     })

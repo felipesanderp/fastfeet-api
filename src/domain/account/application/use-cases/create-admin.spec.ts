@@ -29,14 +29,15 @@ describe('Create Admin', () => {
   })
 
   it('should hash admin password upon registration', async () => {
-    const admin = makeAdmin({
-      cpf: CPF.create('123.123.123-99'),
-      password: await fakeHasher.hash('123456'),
+    const result = await sut.execute({
+      name: 'John Doe',
+      cpf: '100.398.987-98',
+      password: '123456',
     })
-    inMemoryAdminsRepository.items.push(admin)
 
     const hashedPassword = await fakeHasher.hash('123456')
 
+    expect(result.isRight()).toBe(true)
     expect(inMemoryAdminsRepository.items[0].password).toEqual(hashedPassword)
   })
 
