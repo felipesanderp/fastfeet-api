@@ -60,8 +60,6 @@ describe('Update Recipient Profile', () => {
       longitude: -44.7663455,
     })
 
-    console.log(result)
-
     expect(result.isRight()).toBe(true)
     expect(inMemoryRecipientsRepository.items[0]).toEqual(
       expect.objectContaining({
