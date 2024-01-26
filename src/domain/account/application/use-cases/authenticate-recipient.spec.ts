@@ -1,7 +1,7 @@
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { CPF } from '../../enterprise/entities/value-objects/cpf'
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter'
-import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients.repository'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
 import { AuthenticateRecipientUseCase } from './authenticate-recipient'
 import { InMemoryRecipientAddressesRepository } from 'test/repositories/in-memory-recipient-address-repository'
 import { makeRecipient } from 'test/factories/make-recipient'

@@ -1,7 +1,7 @@
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { SamePasswordError } from './errors/same-password-error'
-import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients.repository'
+import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
 import { UpdateRecipientPasswordUseCase } from './update-recipient-password'
 import { InMemoryRecipientAddressesRepository } from 'test/repositories/in-memory-recipient-address-repository'
 import { makeRecipient } from 'test/factories/make-recipient'
