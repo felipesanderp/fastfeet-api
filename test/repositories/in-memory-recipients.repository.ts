@@ -1,17 +1,23 @@
 import { RecipientsRepository } from '@/domain/account/application/repositories/recipients-repository'
 import { Recipient } from '@/domain/account/enterprise/entities/recipient'
 
+import { InMemoryRecipientAddressesRepository } from './in-memory-recipient-addresses-repository'
+
 export class InMemoryRecipientsRepository implements RecipientsRepository {
   public items: Recipient[] = []
 
-  async findById(id: string): Promise<Recipient> {
-    const recipient = this.items.find((item) => item.id.toString() === id)
+  constructor(
+    private recipientAddressesRepository: InMemoryRecipientAddressesRepository,
+  ) {}
 
-    if (!recipient) {
+  async findAll(): Promise<Recipient[] | null> {
+    const recipients = this.items
+
+    if (!recipients) {
       return null
     }
 
-    return recipient
+    return recipients
   }
 
   async findByCpf(cpf: string): Promise<Recipient | null> {
@@ -24,8 +30,8 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
     return recipient
   }
 
-  async findAll(): Promise<Recipient[] | null> {
-    const recipient = this.items
+  async findById(id: string): Promise<Recipient | null> {
+    const recipient = this.items.find((item) => item.id.toString() === id)
 
     if (!recipient) {
       return null
@@ -34,19 +40,43 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
     return recipient
   }
 
-  async create(data: Recipient): Promise<void> {
-    this.items.push(data)
+  async create(recipient: Recipient): Promise<void> {
+    this.items.push(recipient)
+
+    if (recipient.address) {
+      this.recipientAddressesRepository.create(recipient.address)
+    }
   }
 
   async save(recipient: Recipient): Promise<void> {
-    const itemIndex = this.items.findIndex((item) => item.id === recipient.id)
+    const itemIndex = this.items.findIndex(
+      (item) => item.id.toString() === recipient.id.toString(),
+    )
 
-    this.items[itemIndex] = recipient
+    if (itemIndex >= 0) {
+      this.items[itemIndex] = recipient
+
+      if (recipient.address) {
+        this.recipientAddressesRepository.deleteByRecipientId(
+          recipient.id.toString(),
+        )
+
+        this.recipientAddressesRepository.create(recipient.address)
+      }
+    }
   }
 
   async delete(recipient: Recipient): Promise<void> {
-    const itemIndex = this.items.findIndex((item) => item.id === recipient.id)
+    const itemIndex = this.items.findIndex(
+      (item) => item.id.toString() === recipient.id.toString(),
+    )
 
-    this.items.splice(itemIndex, 1)
+    if (itemIndex >= 0) {
+      this.items.splice(itemIndex, 1)
+
+      await this.recipientAddressesRepository.deleteByRecipientId(
+        recipient.id.toString(),
+      )
+    }
   }
 }
