@@ -42,7 +42,7 @@ export class UpdateRecipientProfileUseCase {
   }: UpdateRecipientProfileUseCaseRequest): Promise<UpdateRecipientProfileUseCaseResponse> {
     const recipient = await this.recipientRepository.findById(recipientId)
 
-    if (recipient) {
+    if (!recipient) {
       return left(new ResourceNotFoundError())
     }
 

@@ -14,7 +14,7 @@ let inMemoryRecipientAddressesRepository: InMemoryRecipientAddressesRepository
 
 let sut: UpdateRecipientProfileUseCase
 
-describe('Edit Recipient', () => {
+describe('Update Recipient Profile', () => {
   beforeEach(() => {
     inMemoryRecipientAddressesRepository =
       new InMemoryRecipientAddressesRepository()
@@ -59,6 +59,8 @@ describe('Edit Recipient', () => {
       latitude: -20.4446516,
       longitude: -44.7663455,
     })
+
+    console.log(result)
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryRecipientsRepository.items[0]).toEqual(
