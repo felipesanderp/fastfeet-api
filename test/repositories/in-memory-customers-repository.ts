@@ -1,7 +1,7 @@
 import { CustomersRepository } from '@/domain/order/application/repositories/customers-repository'
 import { Customer } from '@/domain/order/enterprise/entities/customer'
 
-export class InMemoryCustomerRepository implements CustomersRepository {
+export class InMemoryCustomersRepository implements CustomersRepository {
   public items: Customer[] = []
 
   async findById(id: string): Promise<Customer | null> {
