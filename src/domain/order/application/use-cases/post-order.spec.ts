@@ -6,8 +6,7 @@ import { InMemoryOrdersRepository } from 'test/repositories/in-memory-orders-rep
 
 import { makeOrder } from 'test/factories/make-order'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { WithdrawOrderUseCase } from './withdraw-order'
-import { OrderNotPostedError } from './errors/order-not-posted'
+import { PostOrderUseCase } from './post-order'
 
 let inMemoryCustomerAddressesRepository: InMemoryCustomerAddressesRepository
 let inMemoryCustomersRepository: InMemoryCustomersRepository
@@ -15,9 +14,9 @@ let inMemoryOrderImagesRepository: InMemoryOrderImagesRepository
 let inMemoryImagesRepository: InMemoryImagesRepository
 let inMemoryOrdersRepository: InMemoryOrdersRepository
 
-let sut: WithdrawOrderUseCase
+let sut: PostOrderUseCase
 
-describe('Withdraw Order', () => {
+describe('Post Order', () => {
   beforeEach(() => {
     inMemoryCustomerAddressesRepository =
       new InMemoryCustomerAddressesRepository()
@@ -31,41 +30,22 @@ describe('Withdraw Order', () => {
       inMemoryCustomerAddressesRepository,
     )
 
-    sut = new WithdrawOrderUseCase(inMemoryOrdersRepository)
+    sut = new PostOrderUseCase(inMemoryOrdersRepository)
   })
 
-  it('should be able to withdraw an order', async () => {
-    const order = makeOrder(
-      {
-        postedAt: new Date(),
-      },
-      new UniqueEntityID('order-1'),
-    )
-    inMemoryOrdersRepository.items.push(order)
-
-    const result = await sut.execute({
-      orderId: 'order-1',
-      deliverymanId: 'deliveryman-1',
-    })
-
-    expect(result.isRight()).toBe(true)
-    expect(inMemoryOrdersRepository.items[0]).toEqual(
-      expect.objectContaining({
-        withdrawnAt: expect.any(Date),
-      }),
-    )
-  })
-
-  it('should not be able to withdraw a not posted order', async () => {
+  it('should be able to post an order', async () => {
     const order = makeOrder({}, new UniqueEntityID('order-1'))
     inMemoryOrdersRepository.items.push(order)
 
     const result = await sut.execute({
       orderId: 'order-1',
-      deliverymanId: 'deliveryman-1',
     })
 
-    expect(result.isLeft()).toBe(true)
-    expect(result.value).toBeInstanceOf(OrderNotPostedError)
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryOrdersRepository.items[0]).toEqual(
+      expect.objectContaining({
+        postedAt: expect.any(Date),
+      }),
+    )
   })
 })
