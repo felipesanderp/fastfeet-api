@@ -46,8 +46,6 @@ describe('Fetch Deliveryman Orders', () => {
       perPage: 10,
     })
 
-    console.log(result)
-
     expect(result.isRight()).toBe(true)
     expect(result.value?.orders).toHaveLength(3)
     expect(result.value).toEqual({
