@@ -8,7 +8,7 @@ import { OrderReturnedEvent } from '../events/order-returned'
 
 import { OrderImage } from './order-image'
 
-interface OrderProps {
+export interface OrderProps {
   customerId: UniqueEntityID
   deliverymanId?: UniqueEntityID | null
   description: string
