@@ -41,7 +41,7 @@ describe('Deliver Order', () => {
       },
       new UniqueEntityID('order-1'),
     )
-    inMemoryOrdersRepository.create(newOrder)
+    inMemoryOrdersRepository.items.push(newOrder)
 
     const result = await sut.execute({
       deliverymanId: 'deliveryman-1',

@@ -6,6 +6,7 @@ import { InMemoryOrdersRepository } from 'test/repositories/in-memory-orders-rep
 
 import { DeleteOrderUseCase } from './delete-order'
 import { makeOrder } from 'test/factories/make-order'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 let inMemoryCustomerAddressesRepository: InMemoryCustomerAddressesRepository
 let inMemoryCustomersRepository: InMemoryCustomersRepository
@@ -42,5 +43,14 @@ describe('Delete Order', () => {
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryOrdersRepository.items).toHaveLength(0)
+  })
+
+  it('should not be able to delete a non existent order', async () => {
+    const result = await sut.execute({
+      orderId: 'order-1',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
   })
 })
