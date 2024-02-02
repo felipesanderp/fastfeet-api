@@ -36,7 +36,7 @@ export class WithdrawOrderUseCase {
 
     const isOrderPosted = order.postedAt
 
-    if (isOrderPosted) {
+    if (!isOrderPosted) {
       return left(new OrderNotPostedError())
     }
 
