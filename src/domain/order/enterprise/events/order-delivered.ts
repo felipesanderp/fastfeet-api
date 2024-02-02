@@ -11,7 +11,7 @@ export class OrderDeliveredEvent implements DomainEvent {
     this.ocurredAt = new Date()
   }
 
-  public getAggregateId(): UniqueEntityID {
+  getAggregateId(): UniqueEntityID {
     return this.order.id
   }
 }
