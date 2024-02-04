@@ -14,7 +14,7 @@ import { DatabaseModule } from '../database/database.module'
     OnOrderPosted,
     OnOrderReturned,
     OnOrderWithdrawn,
-    // SendNotificationUseCase,
+    SendNotificationUseCase,
   ],
 })
 export class EventsModule {}
