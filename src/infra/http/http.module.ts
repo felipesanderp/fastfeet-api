@@ -16,6 +16,8 @@ import { AuthenticateRecipientUseCase } from '@/domain/account/application/use-c
 
 import { CreateAdminController } from './controllers/create-admin.controller'
 import { CreateAdminUseCase } from '@/domain/account/application/use-cases/create-admin'
+import { RegisterDeliverymanController } from './controllers/register-deliveryman.controller'
+import { RegisterDeliverymanUseCase } from '@/domain/account/application/use-cases/register-deliveryman'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
@@ -24,12 +26,14 @@ import { CreateAdminUseCase } from '@/domain/account/application/use-cases/creat
     AuthenticateDeliverymanController,
     AuthenticateRecipientController,
     CreateAdminController,
+    RegisterDeliverymanController,
   ],
   providers: [
     AuthenticateAdminUseCase,
     AuthenticateDeliverymanUseCase,
     AuthenticateRecipientUseCase,
     CreateAdminUseCase,
+    RegisterDeliverymanUseCase,
   ],
 })
 export class HttpModule {}
