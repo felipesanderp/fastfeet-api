@@ -8,13 +8,18 @@ import { ServicesModule } from '../services/services.module'
 import { AuthenticateAdminController } from "./controllers/authenticate-admin.controller"
 import { AuthenticateAdminUseCase } from "@/domain/account/application/use-cases/authenticate-admin"
 
+import { AuthenticateDeliverymanController } from "./controllers/authenticate-deliveryman.controller"
+import { AuthenticateDeliverymanUseCase } from "@/domain/account/application/use-cases/authenticate-deliveryman"
+
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
   controllers: [
-    AuthenticateAdminController
+    AuthenticateAdminController,
+    AuthenticateDeliverymanController,
   ],
   providers: [
-    AuthenticateAdminUseCase
+    AuthenticateAdminUseCase,
+    AuthenticateDeliverymanUseCase,
   ],
 })
 export class HttpModule {}
