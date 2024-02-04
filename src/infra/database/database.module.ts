@@ -5,10 +5,14 @@ import { PrismaService } from './prisma/prisma.service'
 import { AdminsRepository } from '@/domain/account/application/repositories/admins-repository'
 import { DeliverymanRepository } from "@/domain/account/application/repositories/deliveryman-repository"
 import { NotificationsRepository } from "@/domain/notification/application/repositories/notifications-repository"
+import { RecipientsRepository } from "@/domain/account/application/repositories/recipients-repository"
+import { RecipientAddressesRepository } from "@/domain/account/application/repositories/recipient-addresses-repository"
 
 import { PrismaAdminsRepository } from './prisma/repositories/prisma-admins-repository'
 import { PrismaNotificationsRepository } from "./prisma/repositories/prisma-notifications-repository"
 import { PrismaDeliverymenRepository } from "./prisma/repositories/prisma-deliverymen-repository"
+import { PrismaRecipientRepository } from "./prisma/repositories/prisma-recipient-repository"
+import { PrismaRecipientAddressesRepository } from "./prisma/repositories/prisma-recipient-addresses-repository"
 
 @Module({
   providers: [
@@ -22,10 +26,25 @@ import { PrismaDeliverymenRepository } from "./prisma/repositories/prisma-delive
       useClass: PrismaDeliverymenRepository,
     },
     {
+      provide: RecipientsRepository,
+      useClass: PrismaRecipientRepository
+    },
+    {
+      provide: RecipientAddressesRepository,
+      useClass: PrismaRecipientAddressesRepository,
+    },
+    {
       provide: NotificationsRepository,
       useClass: PrismaNotificationsRepository,
     }
   ],
-  exports: [PrismaService, AdminsRepository, DeliverymanRepository, NotificationsRepository],
+  exports: [
+    PrismaService, 
+    AdminsRepository, 
+    DeliverymanRepository,
+    RecipientsRepository,
+    RecipientAddressesRepository, 
+    NotificationsRepository
+  ],
 })
 export class DatabaseModule {}

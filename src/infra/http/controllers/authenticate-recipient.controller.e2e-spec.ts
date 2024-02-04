@@ -5,34 +5,34 @@ import request from 'supertest'
 import { AppModule } from '@/infra/app.module'
 import { DatabaseModule } from '@/infra/database/database.module'
 
-import { DeliverymanFactory } from 'test/factories/make-deliveryman'
 import { hash } from 'bcryptjs'
 import { CPF } from '@/domain/account/enterprise/entities/value-objects/cpf'
+import { RecipientFactory } from "test/factories/make-recipient"
 
-describe('Authenticate Deliveryman (E2E)', () => {
+describe('Authenticate Recipient (E2E)', () => {
   let app: INestApplication
-  let deliverymanFactory: DeliverymanFactory
+  let recipientFactory: RecipientFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [DeliverymanFactory],
+      providers: [RecipientFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
-    deliverymanFactory = moduleRef.get(DeliverymanFactory)
+    recipientFactory = moduleRef.get(RecipientFactory)
 
     await app.init()
   })
 
-  test('[POST] /sessions/deliveryman', async () => {
-    await deliverymanFactory.makePrismaDeliveryman({
-      cpf: CPF.create('100.546.365-13'),
+  test('[POST] /sessions/recipient', async () => {
+    await recipientFactory.makePrismaRecipient({
+      cpf: CPF.create('100.546.365-14'),
       password: await hash('123456', 8),
     })
 
-    const response = await request(app.getHttpServer()).post('/sessions/deliveryman').send({
-      cpf: '100.546.365-13',
+    const response = await request(app.getHttpServer()).post('/sessions/recipient').send({
+      cpf: '100.546.365-14',
       password: '123456',
     })
 

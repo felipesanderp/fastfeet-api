@@ -11,15 +11,20 @@ import { AuthenticateAdminUseCase } from "@/domain/account/application/use-cases
 import { AuthenticateDeliverymanController } from "./controllers/authenticate-deliveryman.controller"
 import { AuthenticateDeliverymanUseCase } from "@/domain/account/application/use-cases/authenticate-deliveryman"
 
+import { AuthenticateRecipientController } from "./controllers/authenticate-recipient.controller"
+import { AuthenticateRecipientUseCase } from "@/domain/account/application/use-cases/authenticate-recipient"
+
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
   controllers: [
     AuthenticateAdminController,
     AuthenticateDeliverymanController,
+    AuthenticateRecipientController,
   ],
   providers: [
     AuthenticateAdminUseCase,
     AuthenticateDeliverymanUseCase,
+    AuthenticateRecipientUseCase,
   ],
 })
 export class HttpModule {}
