@@ -17,7 +17,7 @@ type GetAllRecipientUseCaseResponse = Either<
 >
 
 @Injectable()
-export class GetAllRecipientUseCase {
+export class GetAllRecipientsUseCase {
   constructor(private recipientsRepository: RecipientsRepository) {}
 
   async execute({

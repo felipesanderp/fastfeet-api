@@ -7,31 +7,31 @@ import { DatabaseModule } from '@/infra/database/database.module'
 
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
-import { RecipientFactory } from 'test/factories/make-recipient'
+import { AdminFactory } from 'test/factories/make-admin'
 
 describe('Register Recipient (E2E)', () => {
   let app: INestApplication
   let jwt: JwtService
   let prisma: PrismaService
-  let recipientFactory: RecipientFactory
+  let adminFactory: AdminFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [RecipientFactory],
+      providers: [AdminFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
 
     jwt = moduleRef.get(JwtService)
     prisma = moduleRef.get(PrismaService)
-    recipientFactory = moduleRef.get(RecipientFactory)
+    adminFactory = moduleRef.get(AdminFactory)
 
     await app.init()
   })
 
   test('[POST] /accounts/recipient', async () => {
-    const admin = await recipientFactory.makePrismaRecipient()
+    const admin = await adminFactory.makePrismaAdmin()
 
     const accessToken = await jwt.signAsync({
       sub: admin.id.toString(),
