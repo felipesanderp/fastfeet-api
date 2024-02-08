@@ -3,6 +3,7 @@ import { HashGenerator } from '../cryptography/hash-generator'
 import { DeliverymanRepository } from '../repositories/deliveryman-repository'
 import { SamePasswordError } from './errors/same-password-error'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { Injectable } from '@nestjs/common'
 
 interface UpdateDeliverymanUseCaseRequest {
   deliverymanId: string
@@ -14,6 +15,7 @@ type UpdateDeliverymanUseCaseResponse = Either<
   null
 >
 
+@Injectable()
 export class UpdateDeliverymanUseCase {
   constructor(
     private deliverymanRepository: DeliverymanRepository,

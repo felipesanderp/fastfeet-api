@@ -1,6 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { RecipientsRepository } from '../repositories/recipients-repository'
+import { Injectable } from '@nestjs/common'
 
 interface DeleteRecipientUseCaseRequest {
   recipientId: string
@@ -8,6 +9,7 @@ interface DeleteRecipientUseCaseRequest {
 
 type DeleteRecipientUseCaseResponse = Either<ResourceNotFoundError, null>
 
+@Injectable()
 export class DeleteRecipientUseCase {
   constructor(private recipientsIRepository: RecipientsRepository) {}
 

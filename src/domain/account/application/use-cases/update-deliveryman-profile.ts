@@ -3,6 +3,7 @@ import { DeliverymanRepository } from '../repositories/deliveryman-repository'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { Deliveryman } from '../../enterprise/entities/deliveryman'
 import { CPF } from '../../enterprise/entities/value-objects/cpf'
+import { Injectable } from '@nestjs/common'
 
 interface UpdateDeliverymanProfileUseCaseRequest {
   deliverymanId: string
@@ -17,6 +18,7 @@ type UpdateDeliverymanProfileUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class UpdateDeliverymanProfileUseCase {
   constructor(private deliverymanRepository: DeliverymanRepository) {}
 
