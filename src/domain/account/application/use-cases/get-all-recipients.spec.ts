@@ -9,7 +9,7 @@ let inMemoryRecipientAddressesRepository: InMemoryRecipientAddressesRepository
 
 let sut: GetAllRecipientUseCase
 
-describe('Get All Deliverymen', () => {
+describe('Get All Recipients', () => {
   beforeEach(() => {
     inMemoryRecipientAddressesRepository =
       new InMemoryRecipientAddressesRepository()
@@ -32,7 +32,10 @@ describe('Get All Deliverymen', () => {
     )
     inMemoryRecipientsRepository.items.push(recipient1, recipient2)
 
-    const result = await sut.execute()
+    const result = await sut.execute({
+      page: 1,
+      perPage: 20,
+    })
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryRecipientsRepository.items).toHaveLength(2)
@@ -46,5 +49,20 @@ describe('Get All Deliverymen', () => {
         }),
       ]),
     )
+  })
+
+  it('should be able to fetch paginated recipients', async () => {
+    for (let i = 1; i <= 22; i++) {
+      await inMemoryRecipientsRepository.create(
+        makeRecipient({ name: 'John Doe' }),
+      )
+    }
+
+    const result = await sut.execute({
+      page: 2,
+      perPage: 20,
+    })
+
+    expect(result.value?.recipients).toHaveLength(2)
   })
 })

@@ -4,10 +4,15 @@ import { Recipient } from '../../enterprise/entities/recipient'
 import { RecipientsRepository } from '../repositories/recipients-repository'
 import { Injectable } from '@nestjs/common'
 
+interface GetAllRecipientUseCaseRequest {
+  page: number
+  perPage: number
+}
+
 type GetAllRecipientUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    recipient: Recipient[]
+    recipients: Recipient[]
   }
 >
 
@@ -15,15 +20,21 @@ type GetAllRecipientUseCaseResponse = Either<
 export class GetAllRecipientUseCase {
   constructor(private recipientsRepository: RecipientsRepository) {}
 
-  async execute(): Promise<GetAllRecipientUseCaseResponse> {
-    const recipient = await this.recipientsRepository.findAll()
+  async execute({
+    page,
+    perPage,
+  }: GetAllRecipientUseCaseRequest): Promise<GetAllRecipientUseCaseResponse> {
+    const recipients = await this.recipientsRepository.findAll({
+      page,
+      perPage,
+    })
 
-    if (!recipient) {
+    if (!recipients) {
       return left(new ResourceNotFoundError())
     }
 
     return right({
-      recipient,
+      recipients,
     })
   }
 }
