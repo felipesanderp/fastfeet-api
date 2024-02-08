@@ -26,7 +26,10 @@ describe('Get All Deliverymen', () => {
     )
     inMemoryDeliverymanRepository.items.push(deliveryman1, deliveryman2)
 
-    const result = await sut.execute()
+    const result = await sut.execute({
+      page: 1,
+      perPage: 20,
+    })
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryDeliverymanRepository.items).toHaveLength(2)
@@ -40,5 +43,20 @@ describe('Get All Deliverymen', () => {
         }),
       ]),
     )
+  })
+
+  it('should be able to fetch paginated deliverymen', async () => {
+    for (let i = 1; i <= 22; i++) {
+      await inMemoryDeliverymanRepository.create(
+        makeDeliveryman({ name: 'John Doe' }),
+      )
+    }
+
+    const result = await sut.execute({
+      page: 2,
+      perPage: 20,
+    })
+
+    expect(result.value?.deliverymen).toHaveLength(2)
   })
 })

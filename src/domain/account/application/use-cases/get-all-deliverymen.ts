@@ -4,6 +4,11 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { Deliveryman } from '../../enterprise/entities/deliveryman'
 import { Injectable } from '@nestjs/common'
 
+interface GetAllDeliverymenUseCaseRequest {
+  page: number
+  perPage: number
+}
+
 type GetAllDeliverymenUseCaseResponse = Either<
   ResourceNotFoundError,
   {
@@ -15,8 +20,14 @@ type GetAllDeliverymenUseCaseResponse = Either<
 export class GetAllDeliverymenUseCase {
   constructor(private deliverymanRepository: DeliverymanRepository) {}
 
-  async execute(): Promise<GetAllDeliverymenUseCaseResponse> {
-    const deliverymen = await this.deliverymanRepository.findAll()
+  async execute({
+    page,
+    perPage,
+  }: GetAllDeliverymenUseCaseRequest): Promise<GetAllDeliverymenUseCaseResponse> {
+    const deliverymen = await this.deliverymanRepository.findAll({
+      page,
+      perPage,
+    })
 
     if (!deliverymen) {
       return left(new ResourceNotFoundError())
