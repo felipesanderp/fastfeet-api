@@ -33,7 +33,7 @@ type registerRecipientBodySchema = z.infer<typeof registerRecipientBodySchema>
 
 @Controller('/accounts/recipient')
 @Roles(UserRoles.Admin)
-export class CreateRecipientController {
+export class RegisterRecipientController {
   constructor(private registerRecipient: RegisterRecipientUseCase) {}
 
   @Post()
@@ -46,11 +46,11 @@ export class CreateRecipientController {
       name,
       cpf,
       password,
-      cep,
-      city,
-      neighborhood,
-      number,
       street,
+      number,
+      neighborhood,
+      city,
+      cep,
     })
 
     if (result.isLeft()) {

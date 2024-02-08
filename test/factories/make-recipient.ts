@@ -6,11 +6,8 @@ import {
 import { CPF } from '@/domain/account/enterprise/entities/value-objects/cpf'
 import { PrismaRecipientMapper } from '@/infra/database/prisma/mappers/prisma-recipient-mapper'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
-// import { PrismaRecipientMapper } from '@/infra/database/prisma/mappers/prisma-recipient-mapper'
-// import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
-// import { Injectable } from '@nestjs/common'
 
 export function makeRecipient(
   override: Partial<RecipientProps> = {},

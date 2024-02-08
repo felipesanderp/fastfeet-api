@@ -1,22 +1,22 @@
-import { RecipientsRepository } from "@/domain/account/application/repositories/recipients-repository";
-import { Recipient } from "@/domain/account/enterprise/entities/recipient";
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma.service";
-import { RecipientAddressesRepository } from "@/domain/account/application/repositories/recipient-addresses-repository";
-import { PrismaRecipientMapper } from "../mappers/prisma-recipient-mapper";
+import { RecipientsRepository } from '@/domain/account/application/repositories/recipients-repository'
+import { Recipient } from '@/domain/account/enterprise/entities/recipient'
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from '../prisma.service'
+import { RecipientAddressesRepository } from '@/domain/account/application/repositories/recipient-addresses-repository'
+import { PrismaRecipientMapper } from '../mappers/prisma-recipient-mapper'
 
 @Injectable()
-export class PrismaRecipientRepository implements RecipientsRepository {
+export class PrismaRecipientsRepository implements RecipientsRepository {
   constructor(
-    private prisma: PrismaService, 
-    private recipientAddressesRepository: RecipientAddressesRepository
+    private prisma: PrismaService,
+    private recipientAddressesRepository: RecipientAddressesRepository,
   ) {}
 
   async findAll(): Promise<Recipient[] | null> {
     const recipients = await this.prisma.user.findMany({
       where: {
-        role: 'RECIPIENT'
-      }
+        role: 'RECIPIENT',
+      },
     })
 
     if (recipients.length <= 0) {
@@ -30,7 +30,7 @@ export class PrismaRecipientRepository implements RecipientsRepository {
     const recipient = await this.prisma.user.findUnique({
       where: {
         cpf,
-      }
+      },
     })
 
     if (!recipient) {
@@ -44,7 +44,7 @@ export class PrismaRecipientRepository implements RecipientsRepository {
     const recipient = await this.prisma.user.findUnique({
       where: {
         id,
-      }
+      },
     })
 
     if (!recipient) {
@@ -73,7 +73,7 @@ export class PrismaRecipientRepository implements RecipientsRepository {
 
     if (recipient.address) {
       await this.recipientAddressesRepository.deleteByRecipientId(
-        recipient.id.toString()
+        recipient.id.toString(),
       )
 
       await this.recipientAddressesRepository.create(recipient.address)
@@ -84,7 +84,7 @@ export class PrismaRecipientRepository implements RecipientsRepository {
     await this.prisma.user.delete({
       where: {
         id: recipient.id.toString(),
-      }
+      },
     })
   }
 }

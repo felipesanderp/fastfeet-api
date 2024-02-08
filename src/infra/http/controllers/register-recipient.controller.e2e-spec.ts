@@ -9,7 +9,7 @@ import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { JwtService } from '@nestjs/jwt'
 import { RecipientFactory } from 'test/factories/make-recipient'
 
-describe('Register Deliveryman (E2E)', () => {
+describe('Register Recipient (E2E)', () => {
   let app: INestApplication
   let jwt: JwtService
   let prisma: PrismaService
@@ -45,6 +45,11 @@ describe('Register Deliveryman (E2E)', () => {
         name: 'John Doe',
         cpf: '100.546.365-10',
         password: '123456',
+        street: 'Rua do meio',
+        number: 10,
+        neighborhood: 'Centro',
+        city: 'Cláudio',
+        cep: '35530000',
       })
 
     expect(response.statusCode).toBe(201)

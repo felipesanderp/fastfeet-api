@@ -3,16 +3,16 @@ import { Module } from '@nestjs/common'
 import { PrismaService } from './prisma/prisma.service'
 
 import { AdminsRepository } from '@/domain/account/application/repositories/admins-repository'
-import { DeliverymanRepository } from "@/domain/account/application/repositories/deliveryman-repository"
-import { NotificationsRepository } from "@/domain/notification/application/repositories/notifications-repository"
-import { RecipientsRepository } from "@/domain/account/application/repositories/recipients-repository"
-import { RecipientAddressesRepository } from "@/domain/account/application/repositories/recipient-addresses-repository"
+import { DeliverymanRepository } from '@/domain/account/application/repositories/deliveryman-repository'
+import { NotificationsRepository } from '@/domain/notification/application/repositories/notifications-repository'
+import { RecipientsRepository } from '@/domain/account/application/repositories/recipients-repository'
+import { RecipientAddressesRepository } from '@/domain/account/application/repositories/recipient-addresses-repository'
 
 import { PrismaAdminsRepository } from './prisma/repositories/prisma-admins-repository'
-import { PrismaNotificationsRepository } from "./prisma/repositories/prisma-notifications-repository"
-import { PrismaDeliverymenRepository } from "./prisma/repositories/prisma-deliverymen-repository"
-import { PrismaRecipientRepository } from "./prisma/repositories/prisma-recipient-repository"
-import { PrismaRecipientAddressesRepository } from "./prisma/repositories/prisma-recipient-addresses-repository"
+import { PrismaNotificationsRepository } from './prisma/repositories/prisma-notifications-repository'
+import { PrismaDeliverymenRepository } from './prisma/repositories/prisma-deliverymen-repository'
+import { PrismaRecipientsRepository } from './prisma/repositories/prisma-recipients-repository'
+import { PrismaRecipientAddressesRepository } from './prisma/repositories/prisma-recipient-addresses-repository'
 
 @Module({
   providers: [
@@ -27,7 +27,7 @@ import { PrismaRecipientAddressesRepository } from "./prisma/repositories/prisma
     },
     {
       provide: RecipientsRepository,
-      useClass: PrismaRecipientRepository
+      useClass: PrismaRecipientsRepository,
     },
     {
       provide: RecipientAddressesRepository,
@@ -36,15 +36,15 @@ import { PrismaRecipientAddressesRepository } from "./prisma/repositories/prisma
     {
       provide: NotificationsRepository,
       useClass: PrismaNotificationsRepository,
-    }
+    },
   ],
   exports: [
-    PrismaService, 
-    AdminsRepository, 
+    PrismaService,
+    AdminsRepository,
     DeliverymanRepository,
     RecipientsRepository,
-    RecipientAddressesRepository, 
-    NotificationsRepository
+    RecipientAddressesRepository,
+    NotificationsRepository,
   ],
 })
 export class DatabaseModule {}
