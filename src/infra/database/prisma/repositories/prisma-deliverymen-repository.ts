@@ -1,18 +1,24 @@
-import { DeliverymanRepository } from "@/domain/account/application/repositories/deliveryman-repository";
-import { Deliveryman } from "@/domain/account/enterprise/entities/deliveryman";
-import { PrismaService } from "../prisma.service";
-import { Injectable } from "@nestjs/common";
-import { PrismaDeliverymanMapper } from "../mappers/prisma-deliveryman-mapper";
+import { DeliverymanRepository } from '@/domain/account/application/repositories/deliveryman-repository'
+import { Deliveryman } from '@/domain/account/enterprise/entities/deliveryman'
+import { PrismaService } from '../prisma.service'
+import { Injectable } from '@nestjs/common'
+import { PrismaDeliverymanMapper } from '../mappers/prisma-deliveryman-mapper'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 
 @Injectable()
 export class PrismaDeliverymenRepository implements DeliverymanRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(): Promise<Deliveryman[] | null> {
+  async findAll({
+    page,
+    perPage,
+  }: PaginationParams): Promise<Deliveryman[] | null> {
     const deliverymen = await this.prisma.user.findMany({
       where: {
-        role: 'DELIVERYMAN'
-      }
+        role: 'DELIVERYMAN',
+      },
+      take: perPage,
+      skip: (page - 1) * perPage,
     })
 
     if (deliverymen.length <= 0) {
@@ -26,7 +32,7 @@ export class PrismaDeliverymenRepository implements DeliverymanRepository {
     const deliveryman = await this.prisma.user.findUnique({
       where: {
         cpf,
-      }
+      },
     })
 
     if (!deliveryman) {
@@ -40,7 +46,7 @@ export class PrismaDeliverymenRepository implements DeliverymanRepository {
     const deliveryman = await this.prisma.user.findUnique({
       where: {
         id,
-      }
+      },
     })
 
     if (!deliveryman) {
@@ -68,7 +74,7 @@ export class PrismaDeliverymenRepository implements DeliverymanRepository {
     await this.prisma.user.delete({
       where: {
         id: deliveryman.id.toString(),
-      }
+      },
     })
   }
 }

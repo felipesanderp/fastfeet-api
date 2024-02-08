@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { DeliverymanRepository } from '@/domain/account/application/repositories/deliveryman-repository'
 import { Deliveryman } from '@/domain/account/enterprise/entities/deliveryman'
 
@@ -24,8 +25,11 @@ export class InMemoryDeliverymanRepository implements DeliverymanRepository {
     return deliveryman
   }
 
-  async findAll(): Promise<Deliveryman[] | null> {
-    const deliverymen = this.items
+  async findAll({
+    page,
+    perPage,
+  }: PaginationParams): Promise<Deliveryman[] | null> {
+    const deliverymen = this.items.slice((page - 1) * perPage, page * perPage)
 
     if (!deliverymen) {
       return null
