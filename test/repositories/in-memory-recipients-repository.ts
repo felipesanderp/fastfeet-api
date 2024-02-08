@@ -2,6 +2,7 @@ import { RecipientsRepository } from '@/domain/account/application/repositories/
 import { Recipient } from '@/domain/account/enterprise/entities/recipient'
 
 import { InMemoryRecipientAddressesRepository } from './in-memory-recipient-addresses-repository'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 
 export class InMemoryRecipientsRepository implements RecipientsRepository {
   public items: Recipient[] = []
@@ -10,8 +11,11 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
     private recipientAddressesRepository: InMemoryRecipientAddressesRepository,
   ) {}
 
-  async findAll(): Promise<Recipient[] | null> {
-    const recipients = this.items
+  async findAll({
+    page,
+    perPage,
+  }: PaginationParams): Promise<Recipient[] | null> {
+    const recipients = this.items.slice((page - 1) * perPage, page * perPage)
 
     if (!recipients) {
       return null

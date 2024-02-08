@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { RecipientAddressesRepository } from '@/domain/account/application/repositories/recipient-addresses-repository'
 import { PrismaRecipientMapper } from '../mappers/prisma-recipient-mapper'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 
 @Injectable()
 export class PrismaRecipientsRepository implements RecipientsRepository {
@@ -12,11 +13,16 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
     private recipientAddressesRepository: RecipientAddressesRepository,
   ) {}
 
-  async findAll(): Promise<Recipient[] | null> {
+  async findAll({
+    page,
+    perPage,
+  }: PaginationParams): Promise<Recipient[] | null> {
     const recipients = await this.prisma.user.findMany({
       where: {
         role: 'RECIPIENT',
       },
+      take: perPage,
+      skip: (page - 1) * perPage,
     })
 
     if (recipients.length <= 0) {
