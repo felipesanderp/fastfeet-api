@@ -35,8 +35,11 @@ import { GetAllDeliverymenUseCase } from '@/domain/account/application/use-cases
 import { GetAllRecipientsController } from './controllers/get-all-recipients.controller'
 import { GetAllRecipientsUseCase } from '@/domain/account/application/use-cases/get-all-recipients'
 
-import { GetDeliverymanByIdController } from './controllers/get-deliveryman-by-id'
+import { GetDeliverymanByIdController } from './controllers/get-deliveryman-by-id.controller'
 import { GetDeliverymanByIdUseCase } from '@/domain/account/application/use-cases/get-deliveryman-by-id'
+
+import { GetRecipientByIdController } from './controllers/get-recipient-by-id.controller'
+import { GetRecipientByIdUseCase } from '@/domain/account/application/use-cases/get-recipient-by-id'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
@@ -52,6 +55,7 @@ import { GetDeliverymanByIdUseCase } from '@/domain/account/application/use-case
     GetAllDeliverymenController,
     GetAllRecipientsController,
     GetDeliverymanByIdController,
+    GetRecipientByIdController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -65,6 +69,7 @@ import { GetDeliverymanByIdUseCase } from '@/domain/account/application/use-case
     GetAllDeliverymenUseCase,
     GetAllRecipientsUseCase,
     GetDeliverymanByIdUseCase,
+    GetRecipientByIdUseCase,
   ],
 })
 export class HttpModule {}
