@@ -10,40 +10,40 @@ import {
 } from '@nestjs/common'
 
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
-import { UpdateRecipientPasswordUseCase } from '@/domain/account/application/use-cases/update-recipient-password'
+import { UpdateDeliverymanPasswordUseCase } from '@/domain/account/application/use-cases/update-deliveryman-password'
 import { Roles } from '@/infra/auth/authorization/roles'
 import { UserRoles } from '@/infra/auth/authorization/user-roles'
 import { SamePasswordError } from '@/domain/account/application/use-cases/errors/same-password-error'
 
-const updateRecipientPasswordBodySchema = z.object({
+const updateDeliverymanPasswordBodySchema = z.object({
   password: z.string(),
 })
 
 const bodyValidationPipe = new ZodValidationPipe(
-  updateRecipientPasswordBodySchema,
+  updateDeliverymanPasswordBodySchema,
 )
 
-type UpdateRecipientPasswordBodySchema = z.infer<
-  typeof updateRecipientPasswordBodySchema
+type UpdateDeliverymanPasswordBodySchema = z.infer<
+  typeof updateDeliverymanPasswordBodySchema
 >
 
-@Controller('/accounts/recipient/:id')
+@Controller('/accounts/deliveryman/:id')
 @Roles(UserRoles.Admin)
-export class UpdateRecipientPasswordController {
+export class UpdateDeliverymanPasswordController {
   constructor(
-    private updateRecipientPassword: UpdateRecipientPasswordUseCase,
+    private updateDeliverymanPassword: UpdateDeliverymanPasswordUseCase,
   ) {}
 
   @Patch()
   @HttpCode(204)
   async handle(
-    @Body(bodyValidationPipe) body: UpdateRecipientPasswordBodySchema,
-    @Param('id') recipientId: string,
+    @Body(bodyValidationPipe) body: UpdateDeliverymanPasswordBodySchema,
+    @Param('id') deliverymanId: string,
   ) {
     const { password } = body
 
-    const result = await this.updateRecipientPassword.execute({
-      recipientId,
+    const result = await this.updateDeliverymanPassword.execute({
+      deliverymanId,
       newPassword: password,
     })
 

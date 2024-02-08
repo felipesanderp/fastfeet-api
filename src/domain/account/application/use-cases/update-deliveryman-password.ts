@@ -16,7 +16,7 @@ type UpdateDeliverymanUseCaseResponse = Either<
 >
 
 @Injectable()
-export class UpdateDeliverymanUseCase {
+export class UpdateDeliverymanPasswordUseCase {
   constructor(
     private deliverymanRepository: DeliverymanRepository,
     private hashGenerator: HashGenerator,

@@ -1,21 +1,21 @@
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { InMemoryDeliverymanRepository } from 'test/repositories/in-memory-deliveryman-repository'
 import { makeDeliveryman } from 'test/factories/make-deliveryman'
-import { UpdateDeliverymanUseCase } from './update-deliveryman-password'
+import { UpdateDeliverymanPasswordUseCase } from './update-deliveryman-password'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { SamePasswordError } from './errors/same-password-error'
 
 let inMemoryDeliverymanRepository: InMemoryDeliverymanRepository
 let fakeHasher: FakeHasher
 
-let sut: UpdateDeliverymanUseCase
+let sut: UpdateDeliverymanPasswordUseCase
 
 describe('Update Deliveryman Password', () => {
   beforeEach(() => {
     inMemoryDeliverymanRepository = new InMemoryDeliverymanRepository()
     fakeHasher = new FakeHasher()
 
-    sut = new UpdateDeliverymanUseCase(
+    sut = new UpdateDeliverymanPasswordUseCase(
       inMemoryDeliverymanRepository,
       fakeHasher,
     )
