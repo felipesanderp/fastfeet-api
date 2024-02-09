@@ -48,8 +48,7 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
     const diffFromYesterday =
       yesterdayOrdersCount && todayOrdersCount
-        ? ((todayOrdersCount - yesterdayOrdersCount) / yesterdayOrdersCount) *
-          100
+        ? (todayOrdersCount / yesterdayOrdersCount) * 100
         : null
 
     return {
