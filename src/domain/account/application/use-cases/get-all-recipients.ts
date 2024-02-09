@@ -1,5 +1,4 @@
-import { Either, left, right } from '@/core/either'
-import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { Either, right } from '@/core/either'
 import { Recipient } from '../../enterprise/entities/recipient'
 import { RecipientsRepository } from '../repositories/recipients-repository'
 import { Injectable } from '@nestjs/common'
@@ -10,7 +9,7 @@ interface GetAllRecipientUseCaseRequest {
 }
 
 type GetAllRecipientUseCaseResponse = Either<
-  ResourceNotFoundError,
+  null,
   {
     recipients: Recipient[]
   }
@@ -28,10 +27,6 @@ export class GetAllRecipientsUseCase {
       page,
       perPage,
     })
-
-    if (!recipients) {
-      return left(new ResourceNotFoundError())
-    }
 
     return right({
       recipients,

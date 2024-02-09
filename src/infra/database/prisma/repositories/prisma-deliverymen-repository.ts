@@ -9,10 +9,7 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 export class PrismaDeliverymenRepository implements DeliverymanRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findAll({
-    page,
-    perPage,
-  }: PaginationParams): Promise<Deliveryman[] | null> {
+  async findAll({ page, perPage }: PaginationParams): Promise<Deliveryman[]> {
     const deliverymen = await this.prisma.user.findMany({
       where: {
         role: 'DELIVERYMAN',
@@ -20,10 +17,6 @@ export class PrismaDeliverymenRepository implements DeliverymanRepository {
       take: perPage,
       skip: (page - 1) * perPage,
     })
-
-    if (deliverymen.length <= 0) {
-      return null
-    }
 
     return deliverymen.map(PrismaDeliverymanMapper.toDomain)
   }

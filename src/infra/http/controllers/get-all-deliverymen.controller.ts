@@ -14,7 +14,7 @@ import { UserRoles } from '@/infra/auth/authorization/user-roles'
 
 const getAllDeliverymenQueryParamsSchema = z.object({
   page: z.coerce.number().min(1).optional().default(1),
-  perPage: z.coerce.number().min(1).optional().default(20),
+  perPage: z.coerce.number().min(1).optional().default(10),
 })
 
 const queryValidationPipe = new ZodValidationPipe(
@@ -46,7 +46,7 @@ export class GetAllDeliverymenController {
       throw new BadRequestException()
     }
 
-    const deliverymen = result.value.deliverymen
+    const { deliverymen } = result.value
 
     return {
       deliverymen: deliverymen.map(DeliverymanPresenter.toHTTP),

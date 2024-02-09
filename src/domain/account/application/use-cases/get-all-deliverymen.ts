@@ -1,6 +1,5 @@
-import { Either, left, right } from '@/core/either'
+import { Either, right } from '@/core/either'
 import { DeliverymanRepository } from '../repositories/deliveryman-repository'
-import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { Deliveryman } from '../../enterprise/entities/deliveryman'
 import { Injectable } from '@nestjs/common'
 
@@ -10,7 +9,7 @@ interface GetAllDeliverymenUseCaseRequest {
 }
 
 type GetAllDeliverymenUseCaseResponse = Either<
-  ResourceNotFoundError,
+  null,
   {
     deliverymen: Deliveryman[]
   }
@@ -28,10 +27,6 @@ export class GetAllDeliverymenUseCase {
       page,
       perPage,
     })
-
-    if (!deliverymen) {
-      return left(new ResourceNotFoundError())
-    }
 
     return right({
       deliverymen,

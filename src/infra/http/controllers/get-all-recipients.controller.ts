@@ -16,7 +16,7 @@ import { RecipientPresenter } from '../presenters/recipient-presenter'
 
 const getAllRecipientQueryParamsSchema = z.object({
   page: z.coerce.number().min(1).optional().default(1),
-  perPage: z.coerce.number().min(1).optional().default(20),
+  perPage: z.coerce.number().min(1).optional().default(10),
 })
 
 const queryValidationPipe = new ZodValidationPipe(

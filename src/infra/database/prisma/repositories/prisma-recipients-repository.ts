@@ -13,10 +13,7 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
     private recipientAddressesRepository: RecipientAddressesRepository,
   ) {}
 
-  async findAll({
-    page,
-    perPage,
-  }: PaginationParams): Promise<Recipient[] | null> {
+  async findAll({ page, perPage }: PaginationParams): Promise<Recipient[]> {
     const recipients = await this.prisma.user.findMany({
       where: {
         role: 'RECIPIENT',
@@ -24,10 +21,6 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
       take: perPage,
       skip: (page - 1) * perPage,
     })
-
-    if (recipients.length <= 0) {
-      return null
-    }
 
     return recipients.map(PrismaRecipientMapper.toDomain)
   }
