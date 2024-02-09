@@ -7,6 +7,7 @@ import { OrderWithdrawnEvent } from '../events/order-withdrawn'
 import { OrderReturnedEvent } from '../events/order-returned'
 
 import { OrderImage } from './order-image'
+import { Optional } from '@/core/types/optional'
 
 export interface OrderProps {
   customerId: UniqueEntityID
@@ -17,6 +18,8 @@ export interface OrderProps {
   withdrawnAt?: Date | null
   deliveredAt?: Date | null
   returnedAt?: Date | null
+  createdAt: Date
+  updatedAt?: Date | null
 }
 
 export class Order extends AggregateRoot<OrderProps> {
@@ -64,6 +67,14 @@ export class Order extends AggregateRoot<OrderProps> {
     return this.props.returnedAt
   }
 
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
   post() {
     if (!this.props.postedAt) {
       this.addDomainEvent(new OrderPostedEvent(this))
@@ -97,8 +108,14 @@ export class Order extends AggregateRoot<OrderProps> {
     this.props.returnedAt = new Date()
   }
 
-  static create(props: OrderProps, id?: UniqueEntityID) {
-    const order = new Order(props, id)
+  static create(props: Optional<OrderProps, 'createdAt'>, id?: UniqueEntityID) {
+    const order = new Order(
+      {
+        ...props,
+        createdAt: props.createdAt ?? new Date(),
+      },
+      id,
+    )
 
     return order
   }

@@ -7,6 +7,11 @@ export interface FindManyNearbyParams {
   longitude: number
 }
 
+export type GetDayOrdersCount = {
+  todayOrders: number
+  diffFromYesterday: number
+}
+
 export abstract class OrdersRepository {
   abstract findManyByDeliverymanId(
     deliverymanId: string,
@@ -17,6 +22,8 @@ export abstract class OrdersRepository {
     customerId: string,
     params: PaginationParams,
   ): Promise<Order[]>
+
+  abstract getDayOrdersCount(): Promise<GetDayOrdersCount>
 
   abstract findManyNearby(params: FindManyNearbyParams): Promise<Order[]>
   abstract findDetailsById(id: string): Promise<OrderDetails | null>
