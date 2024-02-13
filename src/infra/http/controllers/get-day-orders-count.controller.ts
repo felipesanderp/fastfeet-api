@@ -20,8 +20,6 @@ export class GetDayOrdersCountController {
 
     const { todayOrders, diffFromYesterday } = result.value.orders
 
-    console.log(Number((diffFromYesterday - 100).toFixed(2)))
-
     return {
       todayOrders,
       diffFromYesterday: diffFromYesterday || 0,
