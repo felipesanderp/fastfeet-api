@@ -1,6 +1,7 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Order } from '../../enterprise/entities/order'
 import { OrderDetails } from '../../enterprise/entities/value-objects/order-details'
+import { Prisma } from '@prisma/client'
 
 export interface FindManyNearbyParams {
   latitude: number
@@ -13,7 +14,19 @@ export type GetDayOrdersCount = {
 }
 
 export type GetDayPendingOrdersCount = {
-  todayPendingOrders: number
+  todayPendingOrders: {
+    id: string
+    postedAt: Date
+    withdrawnAt: Date
+    recipient: {
+      id: string
+      address: {
+        latitude: Prisma.Decimal
+        longitude: Prisma.Decimal
+      }
+    }
+  }[]
+  todayPendingOrdersCount: number
   diffFromYesterdayPendingOrders: number
 }
 

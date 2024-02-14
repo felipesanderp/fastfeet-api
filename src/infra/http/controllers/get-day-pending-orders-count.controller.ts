@@ -20,11 +20,15 @@ export class GetDayPendingOrdersCountController {
       throw new BadRequestException()
     }
 
-    const { todayPendingOrders, diffFromYesterdayPendingOrders } =
-      result.value.orders
+    const {
+      todayPendingOrders,
+      todayPendingOrdersCount,
+      diffFromYesterdayPendingOrders,
+    } = result.value.orders
 
     return {
       todayPendingOrders,
+      todayPendingOrdersCount,
       diffFromYesterdayPendingOrders: diffFromYesterdayPendingOrders || 0,
     }
   }

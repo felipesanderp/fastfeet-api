@@ -123,6 +123,22 @@ export class PrismaOrdersRepository implements OrdersRepository {
           },
         },
       },
+      select: {
+        id: true,
+        postedAt: true,
+        withdrawnAt: true,
+        recipient: {
+          select: {
+            id: true,
+            address: {
+              select: {
+                latitude: true,
+                longitude: true,
+              },
+            },
+          },
+        },
+      },
     })
 
     const todayOrders = orders.filter(
@@ -143,7 +159,8 @@ export class PrismaOrdersRepository implements OrdersRepository {
         : null
 
     return {
-      todayPendingOrders: todayOrdersCount ?? 0,
+      todayPendingOrders: todayOrders,
+      todayPendingOrdersCount: todayOrdersCount ?? 0,
       diffFromYesterdayPendingOrders: diffFromYesterday
         ? Number((diffFromYesterday - 100).toFixed(2))
         : 0,
