@@ -3,6 +3,7 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import {
   FindManyNearbyParams,
   GetDayOrdersCount,
+  GetDayPendingOrdersCount,
   GetMonthOrdersCount,
   OrdersRepository,
 } from '@/domain/order/application/repositories/orders-repository'
@@ -99,6 +100,52 @@ export class PrismaOrdersRepository implements OrdersRepository {
       currentMonthOrdersCount: currentMonthOrdersCount ?? 0,
       diffFromLastMonth: diffFromLastMonth
         ? Number((diffFromLastMonth - 100).toFixed(2))
+        : 0,
+    }
+  }
+
+  async getDayPendingOrdersCount(): Promise<GetDayPendingOrdersCount> {
+    const today = new Date()
+    const yesterday = dayjs(today).subtract(1, 'day').toDate()
+    const startOfToday = dayjs(today).startOf('day').toDate()
+    const endOfToday = dayjs(today).endOf('day').toDate()
+    const startOfYesterday = dayjs(yesterday).startOf('day').toDate()
+    const endOfYesterday = dayjs(yesterday).endOf('day').toDate()
+
+    const orders = await this.prisma.order.findMany({
+      where: {
+        postedAt: {
+          not: null,
+        },
+        AND: {
+          withdrawnAt: {
+            equals: null,
+          },
+        },
+      },
+    })
+
+    const todayOrders = orders.filter(
+      (order) => order.postedAt >= startOfToday && order.postedAt <= endOfToday,
+    )
+
+    const yesterdayOrders = orders.filter(
+      (order) =>
+        order.postedAt >= startOfYesterday && order.postedAt <= endOfYesterday,
+    )
+
+    const todayOrdersCount = todayOrders.length
+    const yesterdayOrdersCount = yesterdayOrders.length
+
+    const diffFromYesterday =
+      yesterdayOrdersCount && todayOrdersCount
+        ? (todayOrdersCount / yesterdayOrdersCount) * 100
+        : null
+
+    return {
+      todayPendingOrders: todayOrdersCount ?? 0,
+      diffFromYesterdayPendingOrders: diffFromYesterday
+        ? Number((diffFromYesterday - 100).toFixed(2))
         : 0,
     }
   }
