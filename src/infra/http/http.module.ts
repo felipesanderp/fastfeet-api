@@ -44,6 +44,9 @@ import { GetRecipientByIdUseCase } from '@/domain/account/application/use-cases/
 import { GetDayOrdersCountController } from './controllers/get-day-orders-count.controller'
 import { GetDayOrdersCountUseCase } from '@/domain/order/application/use-cases/get-day-orders-count'
 
+import { GetMonthOrdersCountController } from './controllers/get-month-orders-count.controller'
+import { GetMonthOrdersCountUseCase } from '@/domain/order/application/use-cases/get-month-orders-count'
+
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
   controllers: [
@@ -60,6 +63,7 @@ import { GetDayOrdersCountUseCase } from '@/domain/order/application/use-cases/g
     GetDeliverymanByIdController,
     GetRecipientByIdController,
     GetDayOrdersCountController,
+    GetMonthOrdersCountController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -75,6 +79,7 @@ import { GetDayOrdersCountUseCase } from '@/domain/order/application/use-cases/g
     GetDeliverymanByIdUseCase,
     GetRecipientByIdUseCase,
     GetDayOrdersCountUseCase,
+    GetMonthOrdersCountUseCase,
   ],
 })
 export class HttpModule {}
