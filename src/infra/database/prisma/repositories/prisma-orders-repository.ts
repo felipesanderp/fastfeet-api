@@ -3,6 +3,7 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import {
   FindManyNearbyParams,
   GetDayOrdersCount,
+  GetMonthOrdersCount,
   OrdersRepository,
 } from '@/domain/order/application/repositories/orders-repository'
 import { Order } from '@/domain/order/enterprise/entities/order'
@@ -37,6 +38,7 @@ export class PrismaOrdersRepository implements OrdersRepository {
       (order) =>
         order.createdAt >= startOfToday && order.createdAt <= endOfToday,
     )
+
     const yesterdayOrders = orders.filter(
       (order) =>
         order.createdAt >= startOfYesterday &&
@@ -55,6 +57,48 @@ export class PrismaOrdersRepository implements OrdersRepository {
       todayOrders: todayOrdersCount ?? 0,
       diffFromYesterday: diffFromYesterday
         ? Number((diffFromYesterday - 100).toFixed(2))
+        : 0,
+    }
+  }
+
+  async getMonthOrdersCount(): Promise<GetMonthOrdersCount> {
+    const today = dayjs()
+    const lastMonth = today.subtract(1, 'month')
+    const startOfCurrentMonth = today.startOf('month')
+    const endOfCurrentMonth = today.endOf('month')
+    const startOfLastMonth = lastMonth.startOf('month')
+    const endOfLastMonth = lastMonth.endOf('month')
+
+    const orders = await this.prisma.order.findMany({
+      where: {
+        deliveredAt: { not: null },
+      },
+    })
+
+    const currentMonthOrders = orders.filter(
+      (order) =>
+        order.createdAt >= startOfCurrentMonth.toDate() &&
+        order.createdAt <= endOfCurrentMonth.toDate(),
+    )
+
+    const lastMonthOrders = orders.filter(
+      (order) =>
+        order.createdAt >= startOfLastMonth.toDate() &&
+        order.createdAt <= endOfLastMonth.toDate(),
+    )
+
+    const currentMonthOrdersCount = currentMonthOrders.length
+    const lastMonthOrdersCount = lastMonthOrders.length
+
+    const diffFromLastMonth =
+      lastMonthOrdersCount && currentMonthOrdersCount
+        ? (currentMonthOrdersCount / lastMonthOrdersCount) * 100
+        : null
+
+    return {
+      currentMonthOrdersCount: currentMonthOrdersCount ?? 0,
+      diffFromLastMonth: diffFromLastMonth
+        ? Number((diffFromLastMonth - 100).toFixed(2))
         : 0,
     }
   }

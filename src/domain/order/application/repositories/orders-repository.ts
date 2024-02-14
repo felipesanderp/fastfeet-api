@@ -12,6 +12,11 @@ export type GetDayOrdersCount = {
   diffFromYesterday: number
 }
 
+export type GetMonthOrdersCount = {
+  currentMonthOrdersCount: number
+  diffFromLastMonth: number
+}
+
 export abstract class OrdersRepository {
   abstract findManyByDeliverymanId(
     deliverymanId: string,
@@ -24,6 +29,7 @@ export abstract class OrdersRepository {
   ): Promise<Order[]>
 
   abstract getDayOrdersCount(): Promise<GetDayOrdersCount>
+  abstract getMonthOrdersCount(): Promise<GetMonthOrdersCount>
 
   abstract findManyNearby(params: FindManyNearbyParams): Promise<Order[]>
   abstract findDetailsById(id: string): Promise<OrderDetails | null>
