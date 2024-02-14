@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { Either, right } from '@/core/either'
 
 import {
-  GetDayOrdersCount,
+  GetDayDeliveredOrdersCount,
   OrdersRepository,
 } from '../repositories/orders-repository'
 
@@ -14,7 +14,7 @@ import {
 type GetDayOrdersCountUseCaseResponse = Either<
   null,
   {
-    orders: GetDayOrdersCount
+    orders: GetDayDeliveredOrdersCount
   }
 >
 
@@ -23,7 +23,7 @@ export class GetDayOrdersCountUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 
   async execute(): Promise<GetDayOrdersCountUseCaseResponse> {
-    const orders = await this.ordersRepository.getDayOrdersCount()
+    const orders = await this.ordersRepository.getDayDeliveredOrdersCount()
 
     return right({
       orders,
