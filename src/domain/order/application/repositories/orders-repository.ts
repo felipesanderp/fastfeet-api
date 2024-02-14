@@ -8,7 +8,7 @@ export interface FindManyNearbyParams {
   longitude: number
 }
 
-export type GetDayOrdersCount = {
+export type GetDayDeliveredOrdersCount = {
   todayOrders: number
   diffFromYesterday: number
 }
@@ -18,6 +18,7 @@ export type GetDayPendingOrdersCount = {
     id: string
     postedAt: Date
     withdrawnAt: Date
+    deliveredAt: Date
     recipient: {
       id: string
       address: {
@@ -30,7 +31,7 @@ export type GetDayPendingOrdersCount = {
   diffFromYesterdayPendingOrders: number
 }
 
-export type GetMonthOrdersCount = {
+export type GetMonthDeliveredOrdersCount = {
   currentMonthOrdersCount: number
   diffFromLastMonth: number
 }
@@ -46,8 +47,8 @@ export abstract class OrdersRepository {
     params: PaginationParams,
   ): Promise<Order[]>
 
-  abstract getDayOrdersCount(): Promise<GetDayOrdersCount>
-  abstract getMonthOrdersCount(): Promise<GetMonthOrdersCount>
+  abstract getDayDeliveredOrdersCount(): Promise<GetDayDeliveredOrdersCount>
+  abstract getMonthDeliveredOrdersCount(): Promise<GetMonthDeliveredOrdersCount>
   abstract getDayPendingOrdersCount(): Promise<GetDayPendingOrdersCount>
 
   abstract findManyNearby(params: FindManyNearbyParams): Promise<Order[]>

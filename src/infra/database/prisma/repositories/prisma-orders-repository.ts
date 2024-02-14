@@ -2,9 +2,9 @@ import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import {
   FindManyNearbyParams,
-  GetDayOrdersCount,
+  GetDayDeliveredOrdersCount,
   GetDayPendingOrdersCount,
-  GetMonthOrdersCount,
+  GetMonthDeliveredOrdersCount,
   OrdersRepository,
 } from '@/domain/order/application/repositories/orders-repository'
 import { Order } from '@/domain/order/enterprise/entities/order'
@@ -21,7 +21,7 @@ import * as dayjs from 'dayjs'
 export class PrismaOrdersRepository implements OrdersRepository {
   constructor(private prisma: PrismaService) {}
 
-  async getDayOrdersCount(): Promise<GetDayOrdersCount> {
+  async getDayDeliveredOrdersCount(): Promise<GetDayDeliveredOrdersCount> {
     const today = new Date()
     const yesterday = dayjs(today).subtract(1, 'day').toDate()
     const startOfToday = dayjs(today).startOf('day').toDate()
@@ -37,13 +37,13 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
     const todayOrders = orders.filter(
       (order) =>
-        order.createdAt >= startOfToday && order.createdAt <= endOfToday,
+        order.deliveredAt >= startOfToday && order.deliveredAt <= endOfToday,
     )
 
     const yesterdayOrders = orders.filter(
       (order) =>
-        order.createdAt >= startOfYesterday &&
-        order.createdAt <= endOfYesterday,
+        order.deliveredAt >= startOfYesterday &&
+        order.deliveredAt <= endOfYesterday,
     )
 
     const todayOrdersCount = todayOrders.length
@@ -62,7 +62,7 @@ export class PrismaOrdersRepository implements OrdersRepository {
     }
   }
 
-  async getMonthOrdersCount(): Promise<GetMonthOrdersCount> {
+  async getMonthDeliveredOrdersCount(): Promise<GetMonthDeliveredOrdersCount> {
     const today = dayjs()
     const lastMonth = today.subtract(1, 'month')
     const startOfCurrentMonth = today.startOf('month')
@@ -78,14 +78,14 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
     const currentMonthOrders = orders.filter(
       (order) =>
-        order.createdAt >= startOfCurrentMonth.toDate() &&
-        order.createdAt <= endOfCurrentMonth.toDate(),
+        order.deliveredAt >= startOfCurrentMonth.toDate() &&
+        order.deliveredAt <= endOfCurrentMonth.toDate(),
     )
 
     const lastMonthOrders = orders.filter(
       (order) =>
-        order.createdAt >= startOfLastMonth.toDate() &&
-        order.createdAt <= endOfLastMonth.toDate(),
+        order.deliveredAt >= startOfLastMonth.toDate() &&
+        order.deliveredAt <= endOfLastMonth.toDate(),
     )
 
     const currentMonthOrdersCount = currentMonthOrders.length
@@ -114,19 +114,15 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
     const orders = await this.prisma.order.findMany({
       where: {
-        postedAt: {
-          not: null,
-        },
-        AND: {
-          withdrawnAt: {
-            equals: null,
-          },
+        deliveredAt: {
+          in: null,
         },
       },
       select: {
         id: true,
         postedAt: true,
         withdrawnAt: true,
+        deliveredAt: true,
         recipient: {
           select: {
             id: true,
@@ -142,12 +138,20 @@ export class PrismaOrdersRepository implements OrdersRepository {
     })
 
     const todayOrders = orders.filter(
-      (order) => order.postedAt >= startOfToday && order.postedAt <= endOfToday,
+      (order) =>
+        (order.postedAt >= startOfToday && order.postedAt <= endOfToday) ||
+        (order.withdrawnAt >= startOfToday &&
+          order.withdrawnAt <= endOfToday &&
+          order.deliveredAt === null),
     )
 
     const yesterdayOrders = orders.filter(
       (order) =>
-        order.postedAt >= startOfYesterday && order.postedAt <= endOfYesterday,
+        (order.postedAt >= startOfYesterday &&
+          order.postedAt <= endOfYesterday) ||
+        (order.withdrawnAt >= startOfYesterday &&
+          order.withdrawnAt <= endOfYesterday &&
+          order.deliveredAt === null),
     )
 
     const todayOrdersCount = todayOrders.length
