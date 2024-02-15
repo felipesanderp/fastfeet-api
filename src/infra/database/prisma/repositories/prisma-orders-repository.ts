@@ -3,7 +3,7 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import {
   FindManyNearbyParams,
   GetDayDeliveredOrdersCount,
-  GetDayPendingOrdersCount,
+  GetPendingOrdersCount,
   GetMonthDeliveredOrdersCount,
   OrdersRepository,
 } from '@/domain/order/application/repositories/orders-repository'
@@ -104,14 +104,7 @@ export class PrismaOrdersRepository implements OrdersRepository {
     }
   }
 
-  async getDayPendingOrdersCount(): Promise<GetDayPendingOrdersCount> {
-    const today = new Date()
-    const yesterday = dayjs(today).subtract(1, 'day').toDate()
-    const startOfToday = dayjs(today).startOf('day').toDate()
-    const endOfToday = dayjs(today).endOf('day').toDate()
-    const startOfYesterday = dayjs(yesterday).startOf('day').toDate()
-    const endOfYesterday = dayjs(yesterday).endOf('day').toDate()
-
+  async getPendingOrdersCount(): Promise<GetPendingOrdersCount> {
     const orders = await this.prisma.order.findMany({
       where: {
         deliveredAt: {
@@ -137,37 +130,8 @@ export class PrismaOrdersRepository implements OrdersRepository {
       },
     })
 
-    const todayOrders = orders.filter(
-      (order) =>
-        (order.postedAt >= startOfToday && order.postedAt <= endOfToday) ||
-        (order.withdrawnAt >= startOfToday &&
-          order.withdrawnAt <= endOfToday &&
-          order.deliveredAt === null),
-    )
-
-    const yesterdayOrders = orders.filter(
-      (order) =>
-        (order.postedAt >= startOfYesterday &&
-          order.postedAt <= endOfYesterday) ||
-        (order.withdrawnAt >= startOfYesterday &&
-          order.withdrawnAt <= endOfYesterday &&
-          order.deliveredAt === null),
-    )
-
-    const todayOrdersCount = todayOrders.length
-    const yesterdayOrdersCount = yesterdayOrders.length
-
-    const diffFromYesterday =
-      yesterdayOrdersCount && todayOrdersCount
-        ? (todayOrdersCount / yesterdayOrdersCount) * 100
-        : null
-
     return {
-      todayPendingOrders: todayOrders,
-      todayPendingOrdersCount: todayOrdersCount ?? 0,
-      diffFromYesterdayPendingOrders: diffFromYesterday
-        ? Number((diffFromYesterday - 100).toFixed(2))
-        : 0,
+      pendingOrders: orders,
     }
   }
 
