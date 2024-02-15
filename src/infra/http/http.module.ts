@@ -50,6 +50,9 @@ import { GetMonthOrdersCountUseCase } from '@/domain/order/application/use-cases
 import { GetPendingOrdersCountController } from './controllers/get-pending-orders-count.controller'
 import { GetPendingOrdersCountUseCase } from '@/domain/order/application/use-cases/get-pending-orders-count'
 
+import { GetMonthReturnedOrdersCountController } from './controllers/get-month-returned-orders-count.controller'
+import { GetMonthReturnedOrdersCountUseCase } from '@/domain/order/application/use-cases/get-month-returned-orders-count'
+
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
   controllers: [
@@ -68,6 +71,7 @@ import { GetPendingOrdersCountUseCase } from '@/domain/order/application/use-cas
     GetDayOrdersCountController,
     GetMonthOrdersCountController,
     GetPendingOrdersCountController,
+    GetMonthReturnedOrdersCountController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -85,6 +89,7 @@ import { GetPendingOrdersCountUseCase } from '@/domain/order/application/use-cas
     GetDayOrdersCountUseCase,
     GetMonthOrdersCountUseCase,
     GetPendingOrdersCountUseCase,
+    GetMonthReturnedOrdersCountUseCase,
   ],
 })
 export class HttpModule {}

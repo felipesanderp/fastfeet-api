@@ -6,6 +6,7 @@ import {
   GetPendingOrdersCount,
   GetMonthDeliveredOrdersCount,
   OrdersRepository,
+  GetMonthReturnedOrdersCount,
 } from '@/domain/order/application/repositories/orders-repository'
 import { Order } from '@/domain/order/enterprise/entities/order'
 import { OrderDetails } from '@/domain/order/enterprise/entities/value-objects/order-details'
@@ -132,6 +133,48 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
     return {
       pendingOrders: orders,
+    }
+  }
+
+  async getMonthReturnedOrdersCount(): Promise<GetMonthReturnedOrdersCount> {
+    const today = dayjs()
+    const lastMonth = today.subtract(1, 'month')
+    const startOfCurrentMonth = today.startOf('month')
+    const endOfCurrentMonth = today.endOf('month')
+    const startOfLastMonth = lastMonth.startOf('month')
+    const endOfLastMonth = lastMonth.endOf('month')
+
+    const orders = await this.prisma.order.findMany({
+      where: {
+        returnedAt: { not: null },
+      },
+    })
+
+    const currentMonthOrders = orders.filter(
+      (order) =>
+        order.returnedAt >= startOfCurrentMonth.toDate() &&
+        order.returnedAt <= endOfCurrentMonth.toDate(),
+    )
+
+    const lastMonthOrders = orders.filter(
+      (order) =>
+        order.returnedAt >= startOfLastMonth.toDate() &&
+        order.returnedAt <= endOfLastMonth.toDate(),
+    )
+
+    const currentMonthReturnedOrdersCount = currentMonthOrders.length
+    const lastMonthReturnedOrdersCount = lastMonthOrders.length
+
+    const diffFromLastMonth =
+      lastMonthReturnedOrdersCount && currentMonthReturnedOrdersCount
+        ? (currentMonthReturnedOrdersCount / lastMonthReturnedOrdersCount) * 100
+        : null
+
+    return {
+      currentMonthReturnedOrdersCount: currentMonthReturnedOrdersCount ?? 0,
+      diffFromLastMonth: diffFromLastMonth
+        ? Number((diffFromLastMonth - 100).toFixed(2))
+        : 0,
     }
   }
 
