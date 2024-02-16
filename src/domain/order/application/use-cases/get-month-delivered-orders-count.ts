@@ -9,7 +9,7 @@ import { GetMonthDeliveredOrdersCount } from '../repositories/@types/orders'
 //   date: Date
 // }
 
-type GetMonthOrdersCountUseCaseResponse = Either<
+type GetMonthDeliveredOrdersCountUseCaseResponse = Either<
   null,
   {
     orders: GetMonthDeliveredOrdersCount
@@ -17,10 +17,10 @@ type GetMonthOrdersCountUseCaseResponse = Either<
 >
 
 @Injectable()
-export class GetMonthOrdersCountUseCase {
+export class GetMonthDeliveredOrdersCountUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 
-  async execute(): Promise<GetMonthOrdersCountUseCaseResponse> {
+  async execute(): Promise<GetMonthDeliveredOrdersCountUseCaseResponse> {
     const orders = await this.ordersRepository.getMonthDeliveredOrdersCount()
 
     return right({
