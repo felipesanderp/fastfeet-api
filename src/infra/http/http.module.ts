@@ -42,7 +42,7 @@ import { GetRecipientByIdController } from './controllers/get-recipient-by-id.co
 import { GetRecipientByIdUseCase } from '@/domain/account/application/use-cases/get-recipient-by-id'
 
 import { GetDayOrdersCountController } from './controllers/get-day-orders-count.controller'
-import { GetDayOrdersCountUseCase } from '@/domain/order/application/use-cases/get-day-orders-count'
+import { GetDayOrdersCountUseCase } from '@/domain/order/application/use-cases/get-day-delivered-orders-count'
 
 import { GetMonthOrdersCountController } from './controllers/get-month-orders-count.controller'
 import { GetMonthOrdersCountUseCase } from '@/domain/order/application/use-cases/get-month-orders-count'
