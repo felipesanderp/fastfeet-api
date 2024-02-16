@@ -2,10 +2,8 @@ import { Injectable } from '@nestjs/common'
 
 import { Either, right } from '@/core/either'
 
-import {
-  GetPendingOrdersCount,
-  OrdersRepository,
-} from '../repositories/orders-repository'
+import { OrdersRepository } from '../repositories/orders-repository'
+import { GetPendingOrdersCount } from '../repositories/@types/orders'
 
 // interface GetDayOrdersCountUseCaseRequest {
 //   date: Date
