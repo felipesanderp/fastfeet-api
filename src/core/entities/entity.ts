@@ -3,6 +3,7 @@ import { UniqueEntityID } from './unique-entity-id'
 export abstract class Entity<Props> {
   private _id: UniqueEntityID
   private _isActive: boolean
+  private _cancelAt: Date
   protected props: Props
 
   get id() {
@@ -11,6 +12,10 @@ export abstract class Entity<Props> {
 
   get isActive() {
     return this._isActive
+  }
+
+  get cancelAt() {
+    return this._cancelAt
   }
 
   protected constructor(props: Props, id?: UniqueEntityID, isActive?: boolean) {
@@ -29,5 +34,10 @@ export abstract class Entity<Props> {
     }
 
     return false
+  }
+
+  public changeStatus(isActive: boolean) {
+    this._isActive = isActive
+    this._cancelAt = new Date()
   }
 }
