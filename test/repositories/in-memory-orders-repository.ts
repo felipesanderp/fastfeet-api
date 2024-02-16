@@ -107,7 +107,7 @@ export class InMemoryOrdersRepository implements OrdersRepository {
 
   async getPendingOrdersCount() {
     const pendingOrders = this.items
-      .filter((order) => order.deliveredAt === null)
+      .filter((order) => order.postedAt !== null && order.deliveredAt === null)
       .map((order) => {
         const customer = this.customersRepository.items.find((customer) =>
           customer.id.equals(order.customerId),
