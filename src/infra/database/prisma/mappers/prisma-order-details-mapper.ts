@@ -35,6 +35,8 @@ export class PrismaOrderDetailsMapper {
       neighborhood: raw.recipient.address.neighborhood,
       city: raw.recipient.address.city,
       cep: raw.recipient.address.cep,
+      latitude: Number(raw.recipient.address.latitude),
+      longitude: Number(raw.recipient.address.longitude),
     })
   }
 }

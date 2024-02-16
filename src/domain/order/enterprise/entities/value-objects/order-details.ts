@@ -16,6 +16,8 @@ export interface OrderDetailsProps {
   neighborhood: string
   city: string
   cep: string
+  latitude: number
+  longitude: number
 }
 
 export class OrderDetails extends ValueObject<OrderDetailsProps> {
@@ -73,6 +75,14 @@ export class OrderDetails extends ValueObject<OrderDetailsProps> {
 
   get cep() {
     return this.props.cep
+  }
+
+  get latitude() {
+    return this.props.latitude
+  }
+
+  get longitude() {
+    return this.props.longitude
   }
 
   static create(props: OrderDetailsProps) {

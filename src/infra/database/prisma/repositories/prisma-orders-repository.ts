@@ -10,7 +10,6 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import {
   FindManyNearbyParams,
   GetDayDeliveredOrdersCount,
-  GetPendingOrdersCount,
   GetMonthDeliveredOrdersCount,
   GetMonthReturnedOrdersCount,
 } from '@/domain/order/application/repositories/@types/orders'
@@ -108,35 +107,23 @@ export class PrismaOrdersRepository implements OrdersRepository {
     }
   }
 
-  async getPendingOrdersCount(): Promise<GetPendingOrdersCount> {
+  async getPendingOrdersCount(): Promise<OrderDetails[]> {
     const orders = await this.prisma.order.findMany({
       where: {
         deliveredAt: {
           in: null,
         },
       },
-      select: {
-        id: true,
-        postedAt: true,
-        withdrawnAt: true,
-        deliveredAt: true,
+      include: {
         recipient: {
-          select: {
-            id: true,
-            address: {
-              select: {
-                latitude: true,
-                longitude: true,
-              },
-            },
+          include: {
+            address: true,
           },
         },
       },
     })
 
-    return {
-      pendingOrders: orders,
-    }
+    return orders.map(PrismaOrderDetailsMapper.toDomain)
   }
 
   async getMonthReturnedOrdersCount(): Promise<GetMonthReturnedOrdersCount> {

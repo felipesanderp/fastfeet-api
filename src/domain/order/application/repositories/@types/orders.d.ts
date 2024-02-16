@@ -1,3 +1,5 @@
+import { OrderDetails } from '@/domain/order/enterprise/entities/value-objects/order-details'
+
 export interface FindManyNearbyParams {
   latitude: number
   longitude: number
@@ -9,19 +11,7 @@ export type GetDayDeliveredOrdersCount = {
 }
 
 export type GetPendingOrdersCount = {
-  pendingOrders: {
-    id: string
-    postedAt: Date
-    withdrawnAt: Date
-    deliveredAt: Date
-    recipient: {
-      id: string
-      address: {
-        latitude: Prisma.Decimal
-        longitude: Prisma.Decimal
-      }
-    }
-  }[]
+  pendingOrders: OrderDetails[]
 }
 
 export type GetMonthDeliveredOrdersCount = {

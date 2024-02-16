@@ -7,7 +7,6 @@ import {
   GetDayDeliveredOrdersCount,
   GetMonthDeliveredOrdersCount,
   GetMonthReturnedOrdersCount,
-  GetPendingOrdersCount,
 } from './@types/orders'
 
 export abstract class OrdersRepository {
@@ -23,7 +22,7 @@ export abstract class OrdersRepository {
 
   abstract getDayDeliveredOrdersCount(): Promise<GetDayDeliveredOrdersCount>
   abstract getMonthDeliveredOrdersCount(): Promise<GetMonthDeliveredOrdersCount>
-  abstract getPendingOrdersCount(): Promise<GetPendingOrdersCount>
+  abstract getPendingOrdersCount(): Promise<OrderDetails[]>
   abstract getMonthReturnedOrdersCount(): Promise<GetMonthReturnedOrdersCount>
 
   abstract findManyNearby(params: FindManyNearbyParams): Promise<Order[]>
