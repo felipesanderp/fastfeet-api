@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { GetAllRecipientUseCase } from './get-all-recipients'
+import { GetAllRecipientsUseCase } from './get-all-recipients'
 import { InMemoryRecipientsRepository } from 'test/repositories/in-memory-recipients-repository'
 import { InMemoryRecipientAddressesRepository } from 'test/repositories/in-memory-recipient-address-repository'
 import { makeRecipient } from 'test/factories/make-recipient'
@@ -7,7 +7,7 @@ import { makeRecipient } from 'test/factories/make-recipient'
 let inMemoryRecipientsRepository: InMemoryRecipientsRepository
 let inMemoryRecipientAddressesRepository: InMemoryRecipientAddressesRepository
 
-let sut: GetAllRecipientUseCase
+let sut: GetAllRecipientsUseCase
 
 describe('Get All Recipients', () => {
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('Get All Recipients', () => {
       inMemoryRecipientAddressesRepository,
     )
 
-    sut = new GetAllRecipientUseCase(inMemoryRecipientsRepository)
+    sut = new GetAllRecipientsUseCase(inMemoryRecipientsRepository)
   })
 
   it('should be able to get all recipients', async () => {
