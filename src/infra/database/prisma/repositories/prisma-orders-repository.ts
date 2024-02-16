@@ -110,8 +110,13 @@ export class PrismaOrdersRepository implements OrdersRepository {
   async getPendingOrdersCount(): Promise<OrderDetails[]> {
     const orders = await this.prisma.order.findMany({
       where: {
-        deliveredAt: {
-          in: null,
+        postedAt: {
+          not: null,
+        },
+        AND: {
+          deliveredAt: {
+            in: null,
+          },
         },
       },
       include: {
