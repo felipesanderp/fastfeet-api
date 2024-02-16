@@ -1,22 +1,25 @@
+import { Injectable } from '@nestjs/common'
+import { Order as PrismaOrder } from '@prisma/client'
+import * as dayjs from 'dayjs'
+
+import { PrismaService } from '../prisma.service'
+
 import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
+
 import {
   FindManyNearbyParams,
   GetDayDeliveredOrdersCount,
   GetPendingOrdersCount,
   GetMonthDeliveredOrdersCount,
-  OrdersRepository,
   GetMonthReturnedOrdersCount,
-} from '@/domain/order/application/repositories/orders-repository'
+} from '@/domain/order/application/repositories/@types/orders'
 import { Order } from '@/domain/order/enterprise/entities/order'
 import { OrderDetails } from '@/domain/order/enterprise/entities/value-objects/order-details'
-import { Injectable } from '@nestjs/common'
-import { Order as PrismaOrder } from '@prisma/client'
+import { OrdersRepository } from '@/domain/order/application/repositories/orders-repository'
 
 import { PrismaOrderDetailsMapper } from '../mappers/prisma-order-details-mapper'
 import { PrismaOrderMapper } from '../mappers/prisma-order-mapper'
-import { PrismaService } from '../prisma.service'
-import * as dayjs from 'dayjs'
 
 @Injectable()
 export class PrismaOrdersRepository implements OrdersRepository {
