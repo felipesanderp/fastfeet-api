@@ -33,8 +33,12 @@ export class Deliveryman extends Entity<DeliverymanProps> {
     this.props.password = password
   }
 
-  static create(props: DeliverymanProps, id?: UniqueEntityID) {
-    const deliveryman = new Deliveryman(props, id)
+  static create(
+    props: DeliverymanProps,
+    id?: UniqueEntityID,
+    isActive?: boolean,
+  ) {
+    const deliveryman = new Deliveryman(props, id, isActive)
 
     return deliveryman
   }

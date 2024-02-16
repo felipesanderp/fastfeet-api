@@ -2,14 +2,20 @@ import { UniqueEntityID } from './unique-entity-id'
 
 export abstract class Entity<Props> {
   private _id: UniqueEntityID
+  private _isActive: boolean
   protected props: Props
 
   get id() {
     return this._id
   }
 
-  protected constructor(props: Props, id?: UniqueEntityID) {
+  get isActive() {
+    return this._isActive
+  }
+
+  protected constructor(props: Props, id?: UniqueEntityID, isActive?: boolean) {
     this._id = id ?? new UniqueEntityID()
+    this._isActive = isActive ?? true
     this.props = props
   }
 

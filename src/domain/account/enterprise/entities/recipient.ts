@@ -47,6 +47,7 @@ export class Recipient extends Entity<RecipientProps> {
   static create(
     props: Optional<RecipientProps, 'address'>,
     id?: UniqueEntityID,
+    isActive?: boolean,
   ) {
     const recipient = new Recipient(
       {
@@ -54,6 +55,7 @@ export class Recipient extends Entity<RecipientProps> {
         address: null,
       },
       id,
+      isActive,
     )
 
     return recipient
