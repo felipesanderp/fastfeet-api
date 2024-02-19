@@ -55,8 +55,12 @@ import { GetPendingOrdersCountUseCase } from '@/domain/order/application/use-cas
 
 import { GetMonthReturnedOrdersCountController } from './controllers/get-month-returned-orders-count.controller'
 import { GetMonthReturnedOrdersCountUseCase } from '@/domain/order/application/use-cases/get-month-returned-orders-count'
+
 import { DeleteOrderController } from './controllers/delete-order.controller'
 import { DeleteOrderUseCase } from '@/domain/order/application/use-cases/delete-order'
+
+import { GetOrderController } from './controllers/get-order.controller'
+import { GetOrderUseCase } from '@/domain/order/application/use-cases/get-order'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
@@ -74,6 +78,7 @@ import { DeleteOrderUseCase } from '@/domain/order/application/use-cases/delete-
     GetDeliverymanByIdController,
     GetRecipientByIdController,
     CreateOrderController,
+    GetOrderController,
     DeleteOrderController,
     GetDayOrdersCountController,
     GetMonthDeliveredOrdersCountController,
@@ -94,6 +99,7 @@ import { DeleteOrderUseCase } from '@/domain/order/application/use-cases/delete-
     GetDeliverymanByIdUseCase,
     GetRecipientByIdUseCase,
     CreateOrderUseCase,
+    GetOrderUseCase,
     DeleteOrderUseCase,
     GetDayDeliveredOrdersCountUseCase,
     GetMonthDeliveredOrdersCountUseCase,

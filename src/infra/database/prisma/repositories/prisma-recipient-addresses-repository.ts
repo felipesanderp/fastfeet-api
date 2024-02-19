@@ -1,20 +1,22 @@
-import { RecipientAddressesRepository } from "@/domain/account/application/repositories/recipient-addresses-repository";
-import { RecipientAddress } from "@/domain/account/enterprise/entities/value-objects/recipient-address";
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma.service";
-import { PrismaRecipientAddressMapper } from "../mappers/prisma-recipient-address";
+import { RecipientAddressesRepository } from '@/domain/account/application/repositories/recipient-addresses-repository'
+import { RecipientAddress } from '@/domain/account/enterprise/entities/value-objects/recipient-address'
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from '../prisma.service'
+import { PrismaRecipientAddressMapper } from '../mappers/prisma-recipient-address-mapper'
 
 @Injectable()
-export class PrismaRecipientAddressesRepository implements RecipientAddressesRepository {
-  constructor(
-    private prisma: PrismaService, 
-  ) {}
+export class PrismaRecipientAddressesRepository
+  implements RecipientAddressesRepository
+{
+  constructor(private prisma: PrismaService) {}
 
-  async findByRecipientId(recipientId: string): Promise<RecipientAddress | null> {
+  async findByRecipientId(
+    recipientId: string,
+  ): Promise<RecipientAddress | null> {
     const address = await this.prisma.address.findUnique({
       where: {
         recipientId,
-      }
+      },
     })
 
     if (!address) {
@@ -36,7 +38,7 @@ export class PrismaRecipientAddressesRepository implements RecipientAddressesRep
     await this.prisma.address.delete({
       where: {
         recipientId,
-      }
+      },
     })
   }
 }

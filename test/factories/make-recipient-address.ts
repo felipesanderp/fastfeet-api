@@ -3,10 +3,10 @@ import {
   RecipientAddressProps,
   RecipientAddress,
 } from '@/domain/account/enterprise/entities/value-objects/recipient-address'
-// import { PrismaRecipientAddressMapper } from '@/infra/database/prisma/mappers/prisma-recipient-address-mapper'
-// import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { PrismaRecipientAddressMapper } from '@/infra/database/prisma/mappers/prisma-recipient-address-mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
-// import { Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 
 export function makeRecipientAddress(
   override: Partial<RecipientAddressProps> = {},
@@ -26,17 +26,17 @@ export function makeRecipientAddress(
   return recipientAddress
 }
 
-// @Injectable()
-// export class RecipientAddressFactory {
-//   constructor(private prisma: PrismaService) {}
+@Injectable()
+export class RecipientAddressFactory {
+  constructor(private prisma: PrismaService) {}
 
-//   async makePrismaRecipientAddress(data: Partial<RecipientAddressProps> = {}) {
-//     const recipientAddress = makeRecipientAddress(data)
+  async makePrismaRecipientAddress(data: Partial<RecipientAddressProps> = {}) {
+    const recipientAddress = makeRecipientAddress(data)
 
-//     await this.prisma.address.create({
-//       data: PrismaRecipientAddressMapper.toPrisma(recipientAddress),
-//     })
+    await this.prisma.address.create({
+      data: PrismaRecipientAddressMapper.toPrisma(recipientAddress),
+    })
 
-//     return recipientAddress
-//   }
-// }
+    return recipientAddress
+  }
+}
