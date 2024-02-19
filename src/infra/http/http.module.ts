@@ -62,6 +62,12 @@ import { DeleteOrderUseCase } from '@/domain/order/application/use-cases/delete-
 import { GetOrderController } from './controllers/get-order.controller'
 import { GetOrderUseCase } from '@/domain/order/application/use-cases/get-order'
 
+import { CancelRecipientController } from './controllers/cancel-recipient.controller'
+import { CancelRecipientUseCase } from '@/domain/account/application/use-cases/cancel-recipient'
+
+import { CancelDeliverymanController } from './controllers/cancel-deliveryman.controller'
+import { CancelDeliverymanUseCase } from '@/domain/account/application/use-cases/cancel-deliveryman'
+
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
   controllers: [
@@ -77,6 +83,8 @@ import { GetOrderUseCase } from '@/domain/order/application/use-cases/get-order'
     GetAllRecipientsController,
     GetDeliverymanByIdController,
     GetRecipientByIdController,
+    CancelRecipientController,
+    CancelDeliverymanController,
     CreateOrderController,
     GetOrderController,
     DeleteOrderController,
@@ -98,6 +106,8 @@ import { GetOrderUseCase } from '@/domain/order/application/use-cases/get-order'
     GetAllRecipientsUseCase,
     GetDeliverymanByIdUseCase,
     GetRecipientByIdUseCase,
+    CancelDeliverymanUseCase,
+    CancelRecipientUseCase,
     CreateOrderUseCase,
     GetOrderUseCase,
     DeleteOrderUseCase,
