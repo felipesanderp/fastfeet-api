@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Recipient } from "@/domain/account/enterprise/entities/recipient"
+import { Recipient } from '@/domain/account/enterprise/entities/recipient'
 import { CPF } from '@/domain/account/enterprise/entities/value-objects/cpf'
 import { Prisma, User as PrismaUser } from '@prisma/client'
 
@@ -24,7 +24,9 @@ export class PrismaRecipientMapper {
         name: recipient.name,
         cpf: recipient.cpf.value,
         password: recipient.password,
-      }
+        isActive: recipient.isActive,
+        canceledAt: recipient.cancelAt,
+      },
     }
   }
 
@@ -35,6 +37,8 @@ export class PrismaRecipientMapper {
       cpf: recipient.cpf.value,
       password: recipient.password,
       role: 'RECIPIENT',
+      isActive: recipient.isActive,
+      canceledAt: recipient.cancelAt,
     }
   }
 }

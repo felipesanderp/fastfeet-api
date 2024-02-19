@@ -12,6 +12,7 @@ import { Injectable } from '@nestjs/common'
 export function makeRecipient(
   override: Partial<RecipientProps> = {},
   id?: UniqueEntityID,
+  isActive?: boolean,
 ): Recipient {
   const cpf = faker.number
     .int({
@@ -29,6 +30,7 @@ export function makeRecipient(
       ...override,
     },
     id,
+    isActive,
   )
 
   return recipient
