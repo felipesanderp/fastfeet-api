@@ -6,13 +6,14 @@ import {
   Deliveryman,
   DeliverymanProps,
 } from '@/domain/account/enterprise/entities/deliveryman'
-import { Injectable } from "@nestjs/common"
-import { PrismaService } from "@/infra/database/prisma/prisma.service"
-import { PrismaDeliverymanMapper } from "@/infra/database/prisma/mappers/prisma-deliveryman-mapper"
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { PrismaDeliverymanMapper } from '@/infra/database/prisma/mappers/prisma-deliveryman-mapper'
 
 export function makeDeliveryman(
   override: Partial<DeliverymanProps> = {},
   id?: UniqueEntityID,
+  isActive?: boolean,
 ) {
   const cpf = faker.number
     .int({
@@ -30,6 +31,7 @@ export function makeDeliveryman(
       ...override,
     },
     id,
+    isActive,
   )
 
   return deliveryman

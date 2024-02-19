@@ -17,11 +17,13 @@ enum UserRoles {
 }
 
 model User {
-  id       String    @id @default(uuid())
-  name     String
-  cpf      String    @unique
-  password String
-  role     UserRoles @default(RECIPIENT)
+  id         String    @id @default(uuid())
+  name       String
+  cpf        String    @unique
+  password   String
+  role       UserRoles @default(RECIPIENT)
+  isActive   Boolean   @default(true)
+  canceledAt DateTime? @map("canceled_at")
 
   address           Address?
   deliverymanOrders Order[]        @relation("deliverymanOrders")

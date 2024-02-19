@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Deliveryman } from "@/domain/account/enterprise/entities/deliveryman"
+import { Deliveryman } from '@/domain/account/enterprise/entities/deliveryman'
 import { CPF } from '@/domain/account/enterprise/entities/value-objects/cpf'
 import { Prisma, User as PrismaUser } from '@prisma/client'
 
@@ -24,7 +24,9 @@ export class PrismaDeliverymanMapper {
         name: deliveryman.name,
         cpf: deliveryman.cpf.value,
         password: deliveryman.password,
-      }
+        isActive: deliveryman.isActive,
+        canceledAt: deliveryman.cancelAt,
+      },
     }
   }
 
@@ -35,6 +37,8 @@ export class PrismaDeliverymanMapper {
       cpf: deliveryman.cpf.value,
       password: deliveryman.password,
       role: 'DELIVERYMAN',
+      isActive: deliveryman.isActive,
+      canceledAt: deliveryman.cancelAt,
     }
   }
 }

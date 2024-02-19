@@ -11,7 +11,7 @@ import { UserRoles } from '@/infra/auth/authorization/user-roles'
 import { CancelRecipientUseCase } from '@/domain/account/application/use-cases/cancel-recipient'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
-@Controller('/users/recipients/cancel/:id')
+@Controller('/accounts/recipients/cancel/:id')
 @Roles(UserRoles.Admin)
 export class CancelRecipientController {
   constructor(private cancelRecipient: CancelRecipientUseCase) {}
