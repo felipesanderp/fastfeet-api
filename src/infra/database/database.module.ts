@@ -15,6 +15,8 @@ import { PrismaRecipientsRepository } from './prisma/repositories/prisma-recipie
 import { PrismaRecipientAddressesRepository } from './prisma/repositories/prisma-recipient-addresses-repository'
 import { OrdersRepository } from '@/domain/order/application/repositories/orders-repository'
 import { PrismaOrdersRepository } from './prisma/repositories/prisma-orders-repository'
+import { CustomersRepository } from '@/domain/order/application/repositories/customers-repository'
+import { PrismaCustomersRepository } from './prisma/repositories/prisma-customers-repository'
 
 @Module({
   providers: [
@@ -22,6 +24,10 @@ import { PrismaOrdersRepository } from './prisma/repositories/prisma-orders-repo
     {
       provide: AdminsRepository,
       useClass: PrismaAdminsRepository,
+    },
+    {
+      provide: CustomersRepository,
+      useClass: PrismaCustomersRepository,
     },
     {
       provide: DeliverymanRepository,
@@ -47,6 +53,7 @@ import { PrismaOrdersRepository } from './prisma/repositories/prisma-orders-repo
   exports: [
     PrismaService,
     AdminsRepository,
+    CustomersRepository,
     DeliverymanRepository,
     RecipientsRepository,
     RecipientAddressesRepository,
