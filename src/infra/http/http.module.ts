@@ -68,6 +68,24 @@ import { CancelRecipientUseCase } from '@/domain/account/application/use-cases/c
 import { CancelDeliverymanController } from './controllers/cancel-deliveryman.controller'
 import { CancelDeliverymanUseCase } from '@/domain/account/application/use-cases/cancel-deliveryman'
 
+import { PostOrderController } from './controllers/post-order.controller'
+import { PostOrderUseCase } from '@/domain/order/application/use-cases/post-order'
+
+import { DeliverOrderController } from './controllers/deliver-order.controller'
+import { DeliverOrderUseCase } from '@/domain/order/application/use-cases/deliver-order'
+
+import { ReturnOrderController } from './controllers/return-order.controller'
+import { ReturnOrderUseCase } from '@/domain/order/application/use-cases/return-order'
+
+import { WithdrawOrderController } from './controllers/withdrawn-order.controller'
+import { WithdrawOrderUseCase } from '@/domain/order/application/use-cases/withdraw-order'
+
+import { DeleteRecipientController } from './controllers/delete-recipient.controller'
+import { DeleteRecipientUseCase } from '@/domain/account/application/use-cases/delete-recipient'
+
+import { DeleteDeliverymanController } from './controllers/delete-deliveryman.controller'
+import { DeleteDeliverymanUseCase } from '@/domain/account/application/use-cases/delete-deliveryman'
+
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
   controllers: [
@@ -88,10 +106,16 @@ import { CancelDeliverymanUseCase } from '@/domain/account/application/use-cases
     CreateOrderController,
     GetOrderController,
     DeleteOrderController,
+    DeleteRecipientController,
+    DeleteDeliverymanController,
     GetDayOrdersCountController,
     GetMonthDeliveredOrdersCountController,
     GetPendingOrdersCountController,
     GetMonthReturnedOrdersCountController,
+    PostOrderController,
+    DeliverOrderController,
+    ReturnOrderController,
+    WithdrawOrderController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -111,10 +135,16 @@ import { CancelDeliverymanUseCase } from '@/domain/account/application/use-cases
     CreateOrderUseCase,
     GetOrderUseCase,
     DeleteOrderUseCase,
+    DeleteRecipientUseCase,
+    DeleteDeliverymanUseCase,
     GetDayDeliveredOrdersCountUseCase,
     GetMonthDeliveredOrdersCountUseCase,
     GetPendingOrdersCountUseCase,
     GetMonthReturnedOrdersCountUseCase,
+    PostOrderUseCase,
+    DeliverOrderUseCase,
+    ReturnOrderUseCase,
+    WithdrawOrderUseCase,
   ],
 })
 export class HttpModule {}
