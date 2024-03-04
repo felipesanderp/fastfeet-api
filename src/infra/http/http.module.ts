@@ -86,6 +86,24 @@ import { DeleteRecipientUseCase } from '@/domain/account/application/use-cases/d
 import { DeleteDeliverymanController } from './controllers/delete-deliveryman.controller'
 import { DeleteDeliverymanUseCase } from '@/domain/account/application/use-cases/delete-deliveryman'
 
+import { UpdateDeliverymanProfileController } from './controllers/update-deliveryman-profile.controller'
+import { UpdateDeliverymanProfileUseCase } from '@/domain/account/application/use-cases/update-deliveryman-profile'
+
+import { UpdateRecipientProfileController } from './controllers/update-recipient-profile.controller'
+import { UpdateRecipientProfileUseCase } from '@/domain/account/application/use-cases/update-recipient-profile'
+
+import { EditOrderController } from './controllers/edit-order.controller'
+import { EditOrderUseCase } from '@/domain/order/application/use-cases/edit-order'
+
+import { UploadImageController } from './controllers/upload-image.controller'
+import { UploadAndCreateImageUseCase } from '@/domain/order/application/use-cases/upload-and-create-image'
+
+import { FetchNotificationsController } from './controllers/fetch-notifications.controller'
+import { FetchNotificationsUseCase } from '@/domain/notification/application/use-cases/fetch-notifications'
+
+import { ReadNotificationController } from './controllers/read-notification.controller'
+import { ReadNotificationUseCase } from '@/domain/notification/application/use-cases/read-notification'
+
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
   controllers: [
@@ -97,6 +115,9 @@ import { DeleteDeliverymanUseCase } from '@/domain/account/application/use-cases
     RegisterRecipientController,
     UpdateRecipientPasswordController,
     UpdateDeliverymanPasswordController,
+    UpdateDeliverymanProfileController,
+    UpdateRecipientProfileController,
+    EditOrderController,
     GetAllDeliverymenController,
     GetAllRecipientsController,
     GetDeliverymanByIdController,
@@ -116,6 +137,9 @@ import { DeleteDeliverymanUseCase } from '@/domain/account/application/use-cases
     DeliverOrderController,
     ReturnOrderController,
     WithdrawOrderController,
+    UploadImageController,
+    FetchNotificationsController,
+    ReadNotificationController,
   ],
   providers: [
     AuthenticateAdminUseCase,
@@ -126,6 +150,9 @@ import { DeleteDeliverymanUseCase } from '@/domain/account/application/use-cases
     RegisterRecipientUseCase,
     UpdateRecipientPasswordUseCase,
     UpdateDeliverymanPasswordUseCase,
+    UpdateDeliverymanProfileUseCase,
+    UpdateRecipientProfileUseCase,
+    EditOrderUseCase,
     GetAllDeliverymenUseCase,
     GetAllRecipientsUseCase,
     GetDeliverymanByIdUseCase,
@@ -145,6 +172,9 @@ import { DeleteDeliverymanUseCase } from '@/domain/account/application/use-cases
     DeliverOrderUseCase,
     ReturnOrderUseCase,
     WithdrawOrderUseCase,
+    UploadAndCreateImageUseCase,
+    FetchNotificationsUseCase,
+    ReadNotificationUseCase,
   ],
 })
 export class HttpModule {}

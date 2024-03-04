@@ -36,7 +36,7 @@ type UpdateRecipientBodySchema = z.infer<
 
 @Controller('/accounts/recipient/:id')
 @Roles(UserRoles.Admin)
-export class RegisterDeliverymanController {
+export class UpdateRecipientProfileController {
   constructor(private updateRecipientProfile: UpdateRecipientProfileUseCase) {}
 
   @Put()
