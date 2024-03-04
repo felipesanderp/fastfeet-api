@@ -16,7 +16,7 @@ import { OrderNotPostedError } from '@/domain/order/application/use-cases/errors
 
 @Controller('/orders/:id/withdraw')
 @Roles(UserRoles.Deliveryman)
-export class DeliverOrderController {
+export class WithdrawOrderController {
   constructor(private withdrawOrder: WithdrawOrderUseCase) {}
 
   @Patch()
