@@ -3,6 +3,7 @@ import { BadRequestException, Controller, Get, HttpCode } from '@nestjs/common'
 import { Roles } from '@/infra/auth/authorization/roles'
 import { UserRoles } from '@/infra/auth/authorization/user-roles'
 import { GetPendingOrdersCountUseCase } from '@/domain/order/application/use-cases/get-pending-orders-count'
+import { OrderDetailsPresenter } from '../presenters/order-details-presenter'
 
 @Controller('/metrics/pending-orders-count')
 @Roles(UserRoles.Admin)
@@ -18,10 +19,10 @@ export class GetPendingOrdersCountController {
       throw new BadRequestException()
     }
 
-    const { pendingOrders } = result.value.orders
+    const { orders } = result.value
 
     return {
-      pendingOrders,
+      pendingOrders: orders.map(OrderDetailsPresenter.toHTTP),
     }
   }
 }
