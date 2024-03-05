@@ -1,4 +1,10 @@
-import { BadRequestException, Get, HttpCode, Query } from '@nestjs/common'
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  HttpCode,
+  Query,
+} from '@nestjs/common'
 import { z } from 'zod'
 
 import { CurrentUser } from '@/infra/auth/authentication/current-user-decorator'
@@ -7,6 +13,8 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { OrderPresenter } from '@/infra/http/presenters/order-presenter'
 
 import { FetchCustomerOrdersUseCase } from '@/domain/order/application/use-cases/fetch-customer-orders'
+import { Roles } from '@/infra/auth/authorization/roles'
+import { UserRoles } from '@/infra/auth/authorization/user-roles'
 
 const fetchCustomerOrdersQueryParamsSchema = z.object({
   page: z.coerce.number().min(1).optional().default(1),
@@ -21,6 +29,8 @@ type FetchCustomerOrdersQueryParamsSchema = z.infer<
   typeof fetchCustomerOrdersQueryParamsSchema
 >
 
+@Controller('/orders/customer')
+@Roles(UserRoles.Recipient)
 export class FetchCustomerOrdersController {
   constructor(private fetchCustomerOrders: FetchCustomerOrdersUseCase) {}
 
