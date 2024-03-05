@@ -104,6 +104,15 @@ import { FetchNotificationsUseCase } from '@/domain/notification/application/use
 import { ReadNotificationController } from './controllers/read-notification.controller'
 import { ReadNotificationUseCase } from '@/domain/notification/application/use-cases/read-notification'
 
+import { FetchNearbyOrdersController } from './controllers/fetch-nearby-orders.controller'
+import { FetchNearbyOrdersUseCase } from '@/domain/order/application/use-cases/fetch-nearby-orders'
+
+import { FetchDeliverymanOrdersController } from './controllers/fetch-deliveryman-orders.controller'
+import { FetchDeliverymanOrdersUseCase } from '@/domain/order/application/use-cases/fetch-deliveryman-orders'
+
+import { FetchCustomerOrdersController } from './controllers/fetch-customer-orders.controller'
+import { FetchCustomerOrdersUseCase } from '@/domain/order/application/use-cases/fetch-customer-orders'
+
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule, ServicesModule],
   controllers: [
@@ -129,6 +138,9 @@ import { ReadNotificationUseCase } from '@/domain/notification/application/use-c
     DeleteOrderController,
     DeleteRecipientController,
     DeleteDeliverymanController,
+    FetchNearbyOrdersController,
+    FetchDeliverymanOrdersController,
+    FetchCustomerOrdersController,
     GetDayOrdersCountController,
     GetMonthDeliveredOrdersCountController,
     GetPendingOrdersCountController,
@@ -164,6 +176,9 @@ import { ReadNotificationUseCase } from '@/domain/notification/application/use-c
     DeleteOrderUseCase,
     DeleteRecipientUseCase,
     DeleteDeliverymanUseCase,
+    FetchNearbyOrdersUseCase,
+    FetchDeliverymanOrdersUseCase,
+    FetchCustomerOrdersUseCase,
     GetDayDeliveredOrdersCountUseCase,
     GetMonthDeliveredOrdersCountUseCase,
     GetPendingOrdersCountUseCase,
