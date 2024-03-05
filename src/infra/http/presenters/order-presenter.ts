@@ -11,6 +11,8 @@ export class OrderPresenter {
       withdrawnAt: order.withdrawnAt,
       deliveredAt: order.deliveredAt,
       returnedAt: order.returnedAt,
+      createdAt: order.createdAt,
+      updatedAt: order.updatedAt,
     }
   }
 }
