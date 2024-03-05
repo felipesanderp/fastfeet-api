@@ -1,12 +1,12 @@
 import { BadRequestException, Get, HttpCode, Query } from '@nestjs/common'
 import { z } from 'zod'
 
-import { FetchCustomerOrdersUseCase } from './fetch-customer-orders'
-
 import { CurrentUser } from '@/infra/auth/authentication/current-user-decorator'
 import { UserPayload } from '@/infra/auth/authentication/jwt.strategy'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { OrderPresenter } from '@/infra/http/presenters/order-presenter'
+
+import { FetchCustomerOrdersUseCase } from '@/domain/order/application/use-cases/fetch-customer-orders'
 
 const fetchCustomerOrdersQueryParamsSchema = z.object({
   page: z.coerce.number().min(1).optional().default(1),
