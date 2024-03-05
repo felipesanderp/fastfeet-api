@@ -62,5 +62,13 @@ describe('Register Recipient (E2E)', () => {
     })
 
     expect(userOnDatabase).toBeTruthy()
+
+    const addressOnDatabase = await prisma.address.findFirst({
+      where: {
+        recipientId: response.body.recipient.id,
+      },
+    })
+
+    expect(addressOnDatabase).toBeTruthy()
   })
 })

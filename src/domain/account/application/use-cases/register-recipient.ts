@@ -9,8 +9,8 @@ import { Location } from '../services/location'
 import { RecipientAddress } from '../../enterprise/entities/value-objects/recipient-address'
 
 interface RegisterRecipientUseCaseRequest {
-  cpf: string
   name: string
+  cpf: string
   password: string
   street: string
   number: number
@@ -33,8 +33,8 @@ export class RegisterRecipientUseCase {
   ) {}
 
   async execute({
-    cpf,
     name,
+    cpf,
     password,
     street,
     number,
