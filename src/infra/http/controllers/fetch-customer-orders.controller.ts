@@ -53,6 +53,8 @@ export class FetchCustomerOrdersController {
       throw new BadRequestException()
     }
 
+    console.log(result)
+
     const { orders } = result.value
 
     return {
