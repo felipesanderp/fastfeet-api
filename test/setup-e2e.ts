@@ -1,14 +1,15 @@
 import { config } from 'dotenv'
-import { expand } from 'dotenv-expand'
-import { execSync } from 'node:child_process'
 import { randomUUID } from 'node:crypto'
+import { execSync } from 'node:child_process'
+
+import { envSchema } from '@/infra/env/env'
 
 import { DomainEvents } from '@/core/events/domain-events'
-import { envSchema } from '@/infra/env/env'
+
 import { PrismaClient } from '@prisma/client'
 
-expand(config({ path: '.env', override: true }))
-expand(config({ path: '.env.test', override: true }))
+config({ path: '.env', override: true })
+config({ path: '.env.test', override: true })
 
 const env = envSchema.parse(process.env)
 
@@ -35,7 +36,9 @@ beforeAll(async () => {
 
   DomainEvents.shouldRun = false
 
-  execSync('npx prisma migrate deploy')
+  // await redis.flushdb()
+
+  execSync('pnpm prisma migrate deploy')
 })
 
 afterAll(async () => {
