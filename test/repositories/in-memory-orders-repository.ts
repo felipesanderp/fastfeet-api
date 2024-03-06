@@ -42,11 +42,14 @@ export class InMemoryOrdersRepository implements OrdersRepository {
 
     const todayOrders = orders.filter(
       (order) =>
-        order.deliveredAt >= startOfToday && order.deliveredAt <= endOfToday,
+        order.deliveredAt &&
+        order.deliveredAt >= startOfToday &&
+        order.deliveredAt <= endOfToday,
     )
 
     const yesterdayOrders = orders.filter(
       (order) =>
+        order.deliveredAt &&
         order.deliveredAt >= startOfYesterday &&
         order.deliveredAt <= endOfYesterday,
     )
@@ -79,12 +82,14 @@ export class InMemoryOrdersRepository implements OrdersRepository {
 
     const currentMonthOrders = orders.filter(
       (order) =>
+        order.deliveredAt &&
         order.deliveredAt >= startOfCurrentMonth &&
         order.deliveredAt <= endOfCurrentMonth,
     )
 
     const lastMonthOrders = orders.filter(
       (order) =>
+        order.deliveredAt &&
         order.deliveredAt >= startOfLastMonth &&
         order.deliveredAt <= endOfLastMonth,
     )
@@ -113,11 +118,23 @@ export class InMemoryOrdersRepository implements OrdersRepository {
           customer.id.equals(order.customerId),
         )
 
+        if (!customer) {
+          throw new Error(
+            `Customer with ID ${order.customerId.toString()} does not exist.`,
+          )
+        }
+
         const address = this.customerAddressesRepository.items.find(
           (address) => {
             return address.customerId.equals(order.customerId)
           },
         )
+
+        if (!address) {
+          throw new Error(
+            `Address for customer ID ${order.customerId.toString()} does not exist.`,
+          )
+        }
 
         const orderImage = this.orderImagesRepository.items.find((orderImage) =>
           orderImage.orderId.equals(order.id),
@@ -162,12 +179,14 @@ export class InMemoryOrdersRepository implements OrdersRepository {
 
     const currentMonthOrders = orders.filter(
       (order) =>
+        order.returnedAt &&
         order.returnedAt >= startOfCurrentMonth &&
         order.returnedAt <= endOfCurrentMonth,
     )
 
     const lastMonthOrders = orders.filter(
       (order) =>
+        order.returnedAt &&
         order.returnedAt >= startOfLastMonth &&
         order.returnedAt <= endOfLastMonth,
     )
@@ -246,7 +265,7 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     return orders
   }
 
-  async findDetailsById(id: string): Promise<OrderDetails> {
+  async findDetailsById(id: string): Promise<OrderDetails | null> {
     const order = this.items.find((item) => item.id.toString() === id)
 
     if (!order) {
@@ -301,7 +320,7 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     })
   }
 
-  async findById(id: string): Promise<Order> {
+  async findById(id: string): Promise<Order | null> {
     const order = this.items.find((item) => item.id.toString() === id)
 
     if (!order) {

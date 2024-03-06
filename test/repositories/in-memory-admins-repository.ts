@@ -4,7 +4,7 @@ import { Admin } from '@/domain/account/enterprise/entities/admin'
 export class InMemoryAdminRepository implements AdminsRepository {
   public items: Admin[] = []
 
-  async findById(id: string): Promise<Admin> {
+  async findById(id: string): Promise<Admin | null> {
     const admin = this.items.find((item) => item.id.toString() === id)
 
     if (!admin) {
