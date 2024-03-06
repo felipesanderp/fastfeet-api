@@ -3,7 +3,7 @@ import { UniqueEntityID } from './unique-entity-id'
 export abstract class Entity<Props> {
   private _id: UniqueEntityID
   private _isActive: boolean
-  private _cancelAt: Date
+  private _cancelAt!: Date
   protected props: Props
 
   get id() {
