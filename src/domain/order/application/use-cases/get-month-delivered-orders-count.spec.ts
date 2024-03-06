@@ -82,7 +82,7 @@ describe('Get Month Delivered Orders', () => {
     const result = await sut.execute()
 
     expect(result.isRight()).toBe(true)
-    expect(result.value.orders.currentMonthOrdersCount).toEqual(2)
-    expect(result.value.orders.diffFromLastMonth).toEqual(100)
+    expect(result.value?.orders.currentMonthOrdersCount).toEqual(2)
+    expect(result.value?.orders.diffFromLastMonth).toEqual(100)
   })
 })

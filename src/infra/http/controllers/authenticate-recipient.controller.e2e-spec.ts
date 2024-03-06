@@ -7,7 +7,7 @@ import { DatabaseModule } from '@/infra/database/database.module'
 
 import { hash } from 'bcryptjs'
 import { CPF } from '@/domain/account/enterprise/entities/value-objects/cpf'
-import { RecipientFactory } from "test/factories/make-recipient"
+import { RecipientFactory } from 'test/factories/make-recipient'
 
 describe('Authenticate Recipient (E2E)', () => {
   let app: INestApplication
@@ -31,10 +31,12 @@ describe('Authenticate Recipient (E2E)', () => {
       password: await hash('123456', 8),
     })
 
-    const response = await request(app.getHttpServer()).post('/sessions/recipient').send({
-      cpf: '100.546.365-14',
-      password: '123456',
-    })
+    const response = await request(app.getHttpServer())
+      .post('/sessions/recipient')
+      .send({
+        cpf: '100.546.365-14',
+        password: '123456',
+      })
 
     expect(response.statusCode).toBe(201)
     expect(response.body).toEqual({

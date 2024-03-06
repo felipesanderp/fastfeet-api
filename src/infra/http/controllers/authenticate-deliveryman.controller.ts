@@ -19,18 +19,26 @@ const authenticateDeliverymanBodySchema = z.object({
   password: z.string(),
 })
 
-const bodyValidationPipe = new ZodValidationPipe(authenticateDeliverymanBodySchema)
+const bodyValidationPipe = new ZodValidationPipe(
+  authenticateDeliverymanBodySchema,
+)
 
-type AuthenticateDeliverymanBodySchema = z.infer<typeof authenticateDeliverymanBodySchema>
+type AuthenticateDeliverymanBodySchema = z.infer<
+  typeof authenticateDeliverymanBodySchema
+>
 
 @Controller('/sessions/deliveryman')
 @Public()
 export class AuthenticateDeliverymanController {
-  constructor(private authenticateDeliveryman: AuthenticateDeliverymanUseCase) {}
+  constructor(
+    private authenticateDeliveryman: AuthenticateDeliverymanUseCase,
+  ) {}
 
   @Post()
   @HttpCode(201)
-  async handle(@Body(bodyValidationPipe) body: AuthenticateDeliverymanBodySchema) {
+  async handle(
+    @Body(bodyValidationPipe) body: AuthenticateDeliverymanBodySchema,
+  ) {
     const { cpf, password } = body
 
     const result = await this.authenticateDeliveryman.execute({

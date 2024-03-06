@@ -13,16 +13,20 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { WrongCredentialsError } from '@/domain/account/application/use-cases/errors/wrong-credentials-error'
 import { Public } from '@/infra/auth/authentication/public'
 
-import { AuthenticateRecipientUseCase } from "@/domain/account/application/use-cases/authenticate-recipient"
+import { AuthenticateRecipientUseCase } from '@/domain/account/application/use-cases/authenticate-recipient'
 
 const authenticateRecipientBodySchema = z.object({
   cpf: z.string(),
   password: z.string(),
 })
 
-const bodyValidationPipe = new ZodValidationPipe(authenticateRecipientBodySchema)
+const bodyValidationPipe = new ZodValidationPipe(
+  authenticateRecipientBodySchema,
+)
 
-type AuthenticateRecipientBodySchema = z.infer<typeof authenticateRecipientBodySchema>
+type AuthenticateRecipientBodySchema = z.infer<
+  typeof authenticateRecipientBodySchema
+>
 
 @Controller('/sessions/recipient')
 @Public()
@@ -31,7 +35,9 @@ export class AuthenticateRecipientController {
 
   @Post()
   @HttpCode(201)
-  async handle(@Body(bodyValidationPipe) body: AuthenticateRecipientBodySchema) {
+  async handle(
+    @Body(bodyValidationPipe) body: AuthenticateRecipientBodySchema,
+  ) {
     const { cpf, password } = body
 
     const result = await this.authenticateRecipient.execute({

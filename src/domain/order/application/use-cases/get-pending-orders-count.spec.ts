@@ -93,7 +93,7 @@ describe('Get Pending Orders', () => {
     const result = await sut.execute()
 
     expect(result.isRight()).toBe(true)
-    expect(result.value.orders).toHaveLength(2)
+    expect(result.value?.orders).toHaveLength(2)
     expect(result.value).toEqual({
       orders: [
         expect.objectContaining({

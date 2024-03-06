@@ -31,10 +31,12 @@ describe('Authenticate Deliveryman (E2E)', () => {
       password: await hash('123456', 8),
     })
 
-    const response = await request(app.getHttpServer()).post('/sessions/deliveryman').send({
-      cpf: '100.546.365-13',
-      password: '123456',
-    })
+    const response = await request(app.getHttpServer())
+      .post('/sessions/deliveryman')
+      .send({
+        cpf: '100.546.365-13',
+        password: '123456',
+      })
 
     expect(response.statusCode).toBe(201)
     expect(response.body).toEqual({

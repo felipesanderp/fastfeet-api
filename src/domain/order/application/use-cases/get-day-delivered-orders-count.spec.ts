@@ -82,7 +82,7 @@ describe('Get Day Delivered Orders', () => {
     const result = await sut.execute()
 
     expect(result.isRight()).toBe(true)
-    expect(result.value.orders.todayOrders).toEqual(2)
-    expect(result.value.orders.diffFromYesterday).toEqual(100)
+    expect(result.value?.orders.todayOrders).toEqual(2)
+    expect(result.value?.orders.diffFromYesterday).toEqual(100)
   })
 })
