@@ -40,11 +40,14 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
     const todayOrders = orders.filter(
       (order) =>
-        order.deliveredAt >= startOfToday && order.deliveredAt <= endOfToday,
+        order.deliveredAt &&
+        order.deliveredAt >= startOfToday &&
+        order.deliveredAt <= endOfToday,
     )
 
     const yesterdayOrders = orders.filter(
       (order) =>
+        order.deliveredAt &&
         order.deliveredAt >= startOfYesterday &&
         order.deliveredAt <= endOfYesterday,
     )
@@ -81,12 +84,14 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
     const currentMonthOrders = orders.filter(
       (order) =>
+        order.deliveredAt &&
         order.deliveredAt >= startOfCurrentMonth.toDate() &&
         order.deliveredAt <= endOfCurrentMonth.toDate(),
     )
 
     const lastMonthOrders = orders.filter(
       (order) =>
+        order.deliveredAt &&
         order.deliveredAt >= startOfLastMonth.toDate() &&
         order.deliveredAt <= endOfLastMonth.toDate(),
     )
@@ -120,6 +125,7 @@ export class PrismaOrdersRepository implements OrdersRepository {
         },
       },
       include: {
+        image: true,
         recipient: {
           include: {
             address: true,
@@ -147,12 +153,14 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
     const currentMonthOrders = orders.filter(
       (order) =>
+        order.returnedAt &&
         order.returnedAt >= startOfCurrentMonth.toDate() &&
         order.returnedAt <= endOfCurrentMonth.toDate(),
     )
 
     const lastMonthOrders = orders.filter(
       (order) =>
+        order.returnedAt &&
         order.returnedAt >= startOfLastMonth.toDate() &&
         order.returnedAt <= endOfLastMonth.toDate(),
     )
