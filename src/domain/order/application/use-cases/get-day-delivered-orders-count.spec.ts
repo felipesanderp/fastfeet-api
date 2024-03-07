@@ -44,6 +44,9 @@ describe('Get Day Delivered Orders', () => {
       cep: '12345-000',
     })
 
+    const today = new Date()
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+
     inMemoryCustomerAddressesRepository.items.push(customerAddress)
 
     inMemoryOrdersRepository.items.push(
@@ -51,9 +54,9 @@ describe('Get Day Delivered Orders', () => {
         {
           customerId: customer.id,
           description: 'Package 01',
-          postedAt: new Date('2024-03-04T12:00:00'),
-          withdrawnAt: new Date('2024-03-04T13:00:00'),
-          deliveredAt: new Date('2024-03-04T14:00:00'),
+          postedAt: today,
+          withdrawnAt: today,
+          deliveredAt: today,
         },
         new UniqueEntityID('order-1'),
       ),
@@ -61,9 +64,9 @@ describe('Get Day Delivered Orders', () => {
         {
           customerId: customer.id,
           description: 'Package 02',
-          postedAt: new Date('2024-02-03T09:00:00'),
-          withdrawnAt: new Date('2024-03-04T09:20:00'),
-          deliveredAt: new Date('2024-03-04T10:41:00'),
+          postedAt: today,
+          withdrawnAt: today,
+          deliveredAt: today,
         },
         new UniqueEntityID('order-2'),
       ),
@@ -71,9 +74,9 @@ describe('Get Day Delivered Orders', () => {
         {
           customerId: customer.id,
           description: 'Package 03',
-          postedAt: new Date('2024-03-03T12:00:00'),
-          withdrawnAt: new Date('2024-03-03T13:00:00'),
-          deliveredAt: new Date('2024-03-03T14:00:00'),
+          postedAt: yesterday,
+          withdrawnAt: yesterday,
+          deliveredAt: yesterday,
         },
         new UniqueEntityID('order-3'),
       ),
