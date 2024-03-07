@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Order as PrismaOrder } from '@prisma/client'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 import { PrismaService } from '../prisma.service'
 
@@ -40,14 +40,11 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
     const todayOrders = orders.filter(
       (order) =>
-        order.deliveredAt &&
-        order.deliveredAt >= startOfToday &&
-        order.deliveredAt <= endOfToday,
+        order.deliveredAt >= startOfToday && order.deliveredAt <= endOfToday,
     )
 
     const yesterdayOrders = orders.filter(
       (order) =>
-        order.deliveredAt &&
         order.deliveredAt >= startOfYesterday &&
         order.deliveredAt <= endOfYesterday,
     )

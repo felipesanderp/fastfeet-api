@@ -44,7 +44,7 @@ import { GetRecipientByIdUseCase } from '@/domain/account/application/use-cases/
 import { CreateOrderController } from './controllers/create-order.controller'
 import { CreateOrderUseCase } from '@/domain/order/application/use-cases/create-order'
 
-import { GetDayOrdersCountController } from './controllers/get-day-orders-count.controller'
+import { GetDayDeliveredOrdersCountController } from './controllers/get-day-delivered-orders-count.controller'
 import { GetDayDeliveredOrdersCountUseCase } from '@/domain/order/application/use-cases/get-day-delivered-orders-count'
 
 import { GetMonthDeliveredOrdersCountController } from './controllers/get-month-delivered-orders-count.controller'
@@ -141,7 +141,7 @@ import { FetchCustomerOrdersUseCase } from '@/domain/order/application/use-cases
     FetchDeliverymanOrdersController,
     FetchCustomerOrdersController,
     GetOrderController,
-    GetDayOrdersCountController,
+    GetDayDeliveredOrdersCountController,
     GetMonthDeliveredOrdersCountController,
     GetPendingOrdersCountController,
     GetMonthReturnedOrdersCountController,

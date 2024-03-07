@@ -4,9 +4,9 @@ import { Roles } from '@/infra/auth/authorization/roles'
 import { UserRoles } from '@/infra/auth/authorization/user-roles'
 import { GetDayDeliveredOrdersCountUseCase } from '@/domain/order/application/use-cases/get-day-delivered-orders-count'
 
-@Controller('/metrics/day-orders-count')
+@Controller('/metrics/day-delivered-orders-count')
 @Roles(UserRoles.Admin)
-export class GetDayOrdersCountController {
+export class GetDayDeliveredOrdersCountController {
   constructor(private getDayOrdersCount: GetDayDeliveredOrdersCountUseCase) {}
 
   @Get()
