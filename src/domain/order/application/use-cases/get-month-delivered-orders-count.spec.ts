@@ -46,14 +46,19 @@ describe('Get Month Delivered Orders', () => {
 
     inMemoryCustomerAddressesRepository.items.push(customerAddress)
 
+    const today = new Date()
+    const dayWithLastMonth = new Date(
+      new Date().setMonth(new Date().getMonth() - 1),
+    )
+
     inMemoryOrdersRepository.items.push(
       makeOrder(
         {
           customerId: customer.id,
           description: 'Package 01',
-          postedAt: new Date('2024-03-16T12:00:00'),
-          withdrawnAt: new Date('2024-03-16T13:00:00'),
-          deliveredAt: new Date('2024-03-16T14:00:00'),
+          postedAt: today,
+          withdrawnAt: today,
+          deliveredAt: today,
         },
         new UniqueEntityID('order-1'),
       ),
@@ -61,9 +66,9 @@ describe('Get Month Delivered Orders', () => {
         {
           customerId: customer.id,
           description: 'Package 02',
-          postedAt: new Date('2024-03-16T09:00:00'),
-          withdrawnAt: new Date('2024-03-16T09:20:00'),
-          deliveredAt: new Date('2024-03-16T10:41:00'),
+          postedAt: today,
+          withdrawnAt: today,
+          deliveredAt: today,
         },
         new UniqueEntityID('order-2'),
       ),
@@ -71,9 +76,9 @@ describe('Get Month Delivered Orders', () => {
         {
           customerId: customer.id,
           description: 'Package 03',
-          postedAt: new Date('2024-02-15T12:00:00'),
-          withdrawnAt: new Date('2024-02-15T13:00:00'),
-          deliveredAt: new Date('2024-02-15T14:00:00'),
+          postedAt: dayWithLastMonth,
+          withdrawnAt: dayWithLastMonth,
+          deliveredAt: dayWithLastMonth,
         },
         new UniqueEntityID('order-3'),
       ),
