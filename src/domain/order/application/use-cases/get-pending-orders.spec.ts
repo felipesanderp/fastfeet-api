@@ -9,7 +9,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeCustomer } from 'test/factories/make-customer'
 import { makeCustomerAddress } from 'test/factories/make-customer-address'
 
-import { GetPendingOrdersCountUseCase } from './get-pending-orders-count'
+import { GetPendingOrdersUseCase } from './get-pending-orders'
 
 let inMemoryCustomerAddressesRepository: InMemoryCustomerAddressesRepository
 let inMemoryCustomersRepository: InMemoryCustomersRepository
@@ -17,7 +17,7 @@ let inMemoryOrderImagesRepository: InMemoryOrderImagesRepository
 let inMemoryImagesRepository: InMemoryImagesRepository
 let inMemoryOrdersRepository: InMemoryOrdersRepository
 
-let sut: GetPendingOrdersCountUseCase
+let sut: GetPendingOrdersUseCase
 
 describe('Get Pending Orders', () => {
   beforeEach(() => {
@@ -33,7 +33,7 @@ describe('Get Pending Orders', () => {
       inMemoryCustomerAddressesRepository,
     )
 
-    sut = new GetPendingOrdersCountUseCase(inMemoryOrdersRepository)
+    sut = new GetPendingOrdersUseCase(inMemoryOrdersRepository)
   })
 
   it('should be able to get pending orders', async () => {

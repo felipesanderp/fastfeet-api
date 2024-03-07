@@ -50,8 +50,8 @@ import { GetDayDeliveredOrdersCountUseCase } from '@/domain/order/application/us
 import { GetMonthDeliveredOrdersCountController } from './controllers/get-month-delivered-orders-count.controller'
 import { GetMonthDeliveredOrdersCountUseCase } from '@/domain/order/application/use-cases/get-month-delivered-orders-count'
 
-import { GetPendingOrdersCountController } from './controllers/get-pending-orders-count.controller'
-import { GetPendingOrdersCountUseCase } from '@/domain/order/application/use-cases/get-pending-orders-count'
+import { GetPendingOrdersController } from './controllers/get-pending-orders.controller'
+import { GetPendingOrdersUseCase } from '@/domain/order/application/use-cases/get-pending-orders'
 
 import { GetMonthReturnedOrdersCountController } from './controllers/get-month-returned-orders-count.controller'
 import { GetMonthReturnedOrdersCountUseCase } from '@/domain/order/application/use-cases/get-month-returned-orders-count'
@@ -143,7 +143,7 @@ import { FetchCustomerOrdersUseCase } from '@/domain/order/application/use-cases
     GetOrderController,
     GetDayDeliveredOrdersCountController,
     GetMonthDeliveredOrdersCountController,
-    GetPendingOrdersCountController,
+    GetPendingOrdersController,
     GetMonthReturnedOrdersCountController,
     PostOrderController,
     DeliverOrderController,
@@ -181,7 +181,7 @@ import { FetchCustomerOrdersUseCase } from '@/domain/order/application/use-cases
     GetOrderUseCase,
     GetDayDeliveredOrdersCountUseCase,
     GetMonthDeliveredOrdersCountUseCase,
-    GetPendingOrdersCountUseCase,
+    GetPendingOrdersUseCase,
     GetMonthReturnedOrdersCountUseCase,
     PostOrderUseCase,
     DeliverOrderUseCase,

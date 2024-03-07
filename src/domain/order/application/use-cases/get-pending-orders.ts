@@ -9,7 +9,7 @@ import { OrderDetails } from '../../enterprise/entities/value-objects/order-deta
 //   date: Date
 // }
 
-type GetDayPendingOrdersCountUseCaseResponse = Either<
+type GetDayPendingOrdersUseCaseResponse = Either<
   null,
   {
     orders: OrderDetails[]
@@ -17,10 +17,10 @@ type GetDayPendingOrdersCountUseCaseResponse = Either<
 >
 
 @Injectable()
-export class GetPendingOrdersCountUseCase {
+export class GetPendingOrdersUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 
-  async execute(): Promise<GetDayPendingOrdersCountUseCaseResponse> {
+  async execute(): Promise<GetDayPendingOrdersUseCaseResponse> {
     const orders = await this.ordersRepository.getPendingOrdersCount()
 
     return right({
