@@ -14,6 +14,7 @@ import { WrongCredentialsError } from '@/domain/account/application/use-cases/er
 import { Public } from '@/infra/auth/authentication/public'
 
 import { AuthenticateRecipientUseCase } from '@/domain/account/application/use-cases/authenticate-recipient'
+import { ApiTags } from '@nestjs/swagger'
 
 const authenticateRecipientBodySchema = z.object({
   cpf: z.string(),
@@ -28,6 +29,7 @@ type AuthenticateRecipientBodySchema = z.infer<
   typeof authenticateRecipientBodySchema
 >
 
+@ApiTags('Session')
 @Controller('/sessions/recipient')
 @Public()
 export class AuthenticateRecipientController {

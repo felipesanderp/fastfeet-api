@@ -13,6 +13,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { WrongCredentialsError } from '@/domain/account/application/use-cases/errors/wrong-credentials-error'
 import { Public } from '@/infra/auth/authentication/public'
 import { AuthenticateDeliverymanUseCase } from '@/domain/account/application/use-cases/authenticate-deliveryman'
+import { ApiTags } from '@nestjs/swagger'
 
 const authenticateDeliverymanBodySchema = z.object({
   cpf: z.string(),
@@ -27,6 +28,7 @@ type AuthenticateDeliverymanBodySchema = z.infer<
   typeof authenticateDeliverymanBodySchema
 >
 
+@ApiTags('Session')
 @Controller('/sessions/deliveryman')
 @Public()
 export class AuthenticateDeliverymanController {

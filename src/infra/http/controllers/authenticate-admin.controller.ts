@@ -13,6 +13,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { WrongCredentialsError } from '@/domain/account/application/use-cases/errors/wrong-credentials-error'
 import { Public } from '@/infra/auth/authentication/public'
 import { AuthenticateAdminUseCase } from '@/domain/account/application/use-cases/authenticate-admin'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
 
 const authenticateAdminBodySchema = z.object({
   cpf: z.string(),
@@ -23,12 +24,14 @@ const bodyValidationPipe = new ZodValidationPipe(authenticateAdminBodySchema)
 
 type AuthenticateAdminBodySchema = z.infer<typeof authenticateAdminBodySchema>
 
+@ApiTags('Session')
 @Controller('/sessions')
 @Public()
 export class AuthenticateAdminController {
   constructor(private authenticateAdmin: AuthenticateAdminUseCase) {}
 
   @Post()
+  @ApiOperation({ summary: 'Authenticate Admin' })
   @HttpCode(201)
   async handle(@Body(bodyValidationPipe) body: AuthenticateAdminBodySchema) {
     const { cpf, password } = body
