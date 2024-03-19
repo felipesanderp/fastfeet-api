@@ -9,11 +9,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common'
 
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { WrongCredentialsError } from '@/domain/account/application/use-cases/errors/wrong-credentials-error'
 import { Public } from '@/infra/auth/authentication/public'
 import { AuthenticateAdminUseCase } from '@/domain/account/application/use-cases/authenticate-admin'
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
 
 const authenticateAdminBodySchema = z.object({
   cpf: z.string(),
@@ -31,6 +32,17 @@ export class AuthenticateAdminController {
   constructor(private authenticateAdmin: AuthenticateAdminUseCase) {}
 
   @Post()
+  @ApiResponse({ status: 200, description: 'User logged in successfully.' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        cpf: { type: 'string', example: '123.123.123-36' },
+        password: { type: 'string', example: '123456' },
+      },
+      required: ['cpf', 'password'],
+    },
+  })
   @ApiOperation({ summary: 'Authenticate Admin' })
   @HttpCode(201)
   async handle(@Body(bodyValidationPipe) body: AuthenticateAdminBodySchema) {

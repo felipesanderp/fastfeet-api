@@ -20,6 +20,7 @@ async function bootstrap() {
     .setTitle('Fastfeet API')
     .setDescription('Description for Fastfeet API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
